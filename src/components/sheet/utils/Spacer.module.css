@@ -1,0 +1,6 @@
+.spacer {
+  flex: 0 0 auto;
+  width: 50px; /* Will be adaptable. */
+  background-color: #eee; 
+  
+}

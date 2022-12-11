@@ -1,0 +1,10 @@
+.sheetPane {
+  flex: 1 1 auto; /* fluid! */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+
+  background-color: #eee;
+}

@@ -1,0 +1,10 @@
+.colHeadings {
+  flex: 1 1 auto; /* fluid! */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+
+  background-color: #ccc;
+}

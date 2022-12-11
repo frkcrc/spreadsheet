@@ -1,0 +1,8 @@
+.row {  
+  flex: 0 0 auto; /* do NOT adapt! */
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+}

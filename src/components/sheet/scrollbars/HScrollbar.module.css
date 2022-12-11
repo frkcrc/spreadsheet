@@ -1,0 +1,6 @@
+.hScrollbar {
+  flex: 1 0 auto;
+
+  height: 30px;
+  background-color: #ccc;
+}

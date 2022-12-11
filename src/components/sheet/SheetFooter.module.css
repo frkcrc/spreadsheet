@@ -1,0 +1,7 @@
+.sheetFooter {
+  flex: 0 0 content;
+
+  display: flex;
+
+  background-color: white;
+}
