@@ -1,15 +1,14 @@
-import SheetPane from './SheetPane';
-import RowHeadings from './headings/RowHeadings';
-import styles from './SheetContainer.module.css';
-import VScrollbar from './scrollbars/VScrollbar';
+import SheetContent from './SheetContent';
+import SheetHeader from './SheetHeader';
+import SheetFooter from './SheetFooter';
 
 const SheetContainer = () => {
   return (
-    <div className={styles.sheetContainer}>
-      <RowHeadings />
-      <SheetPane />
-      <VScrollbar />
-    </div>
+    <>
+      <SheetHeader />
+      <SheetContent />
+      <SheetFooter />
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import Row from './pane/Row';
+import Row from './Row';
 import styles from './SheetPane.module.css';
 
 const SheetPane = () => {
