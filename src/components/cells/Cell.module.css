@@ -1,8 +1,11 @@
-.headingCell {  
+.cell {  
   flex: 0 0 auto;
   
-  background-color: #aaa;
+  background-color: white;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+}
 
+.head {
+  background-color: #aaa;
 }

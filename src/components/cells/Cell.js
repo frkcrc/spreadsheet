@@ -1,6 +1,8 @@
 import styles from './Cell.module.css';
 
-const Cell =  props => {
+const Cell = props => {
+
+  const classes = `${styles.cell} ${props.head && styles.head}`;
 
   const style = {
     width: props.width,
@@ -9,7 +11,7 @@ const Cell =  props => {
 
   return (
     <div
-      className={styles.cell}
+      className={classes}
       style={style}
     ></div>
   );

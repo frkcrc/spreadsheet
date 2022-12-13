@@ -26,6 +26,26 @@
   background-color: #ccc;
 }
 
+.view {
+  flex: 1 1 auto; /* fluid! */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+
+  background-color: #eee;
+}
+
+.row {  
+  flex: 0 0 auto; /* do NOT adapt! */
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
 .footer {
   flex: 0 0 content;
   display: flex;
