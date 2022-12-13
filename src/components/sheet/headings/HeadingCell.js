@@ -1,8 +1,17 @@
 import styles from './HeadingCell.module.css';
 
-const HeadingCell = () => {
+const HeadingCell =  props => {
+
+  const style = {
+    width: props.width,
+    height: props.height,
+  };
+
   return (
-    <div className={styles.headingCell}></div>
+    <div
+      className={styles.headingCell}
+      style={style}
+    ></div>
   );
 };
 
