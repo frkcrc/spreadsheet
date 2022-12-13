@@ -1,8 +1,0 @@
-.footer {
-  flex: 0 0 content;
-
-  /* Test sizing/color. */
-  flex: 0 0 auto;
-  height: 50px;
-  background-color: #ccc;
-}

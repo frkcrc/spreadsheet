@@ -1,7 +1,7 @@
 import Row from './Row';
-import styles from './SheetPane.module.css';
+import styles from './SheetView.module.css';
 
-const SheetPane = () => {
+const SheetView = () => {
   return (
     <div className={styles.sheetPane}>
       {new Array(18).fill(<Row />)}
@@ -9,4 +9,4 @@ const SheetPane = () => {
   );
 };
 
-export default SheetPane;
+export default SheetView;

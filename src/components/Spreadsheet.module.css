@@ -1,0 +1,17 @@
+.content {
+  flex: 1 1 auto; /* fluid! */
+  display: flex;
+  overflow: hidden;
+}
+
+.header {
+  flex: 0 0 content;
+  display: flex;
+  background-color: white;
+}
+
+.footer {
+  flex: 0 0 content;
+  display: flex;
+  background-color: white;
+}
