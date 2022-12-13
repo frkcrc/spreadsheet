@@ -1,8 +1,7 @@
-import ColHeadings from './headings/ColHeadings';
-import RowHeadings from './headings/RowHeadings';
+import SheetPane from './sheet-view/SheetView';
+import HeadingCell from './sheet-view/HeadingCell';
 import VScrollbar from './scrollbars/VScrollbar';
 import HScrollbar from './scrollbars/HScrollbar';
-import SheetPane from './sheet-view/SheetView';
 
 import styles from './Spreadsheet.module.css';
 
@@ -11,12 +10,17 @@ const Spreadsheet = () => {
     <>
 
       <div className={styles.header}>
-        <ColHeadings />
+        {new Array(15).fill(<HeadingCell width={100} height={30} />)}
       </div>
 
       <div className={styles.content}>
-        <RowHeadings />
+
+        <div className={styles.rowHeadings}>
+          {new Array(18).fill(<HeadingCell width={50} height={30}/>)}
+        </div>
+
         <SheetPane />
+
         <VScrollbar />
       </div>
 
