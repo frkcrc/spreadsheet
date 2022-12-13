@@ -3,7 +3,7 @@ import styles from './HScrollbar.module.css';
 const HScrollbar = () => {
   return (
     <div className={styles.hScrollbar}>
-      H Scrollbar
+      <div className={styles.handle}></div>
     </div>
   );
 };
