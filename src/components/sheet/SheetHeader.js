@@ -5,9 +5,9 @@ import Spacer from './utils/Spacer';
 const SheetHeader = () => {
   return (
     <div className={styles.sheetHeader}>
-      <Spacer />
+      <Spacer width={50} />
       <ColHeadings />
-      <Spacer />
+      <Spacer width={30} />
     </div>
   );
 };

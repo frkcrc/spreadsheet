@@ -5,9 +5,9 @@ import styles from './SheetFooter.module.css';
 const SheetFooter = () => {
   return (
     <div className={styles.sheetFooter}>
-      <Spacer />
+      <Spacer width={50} />
       <HScrollbar />
-      <Spacer />
+      <Spacer width={30} />
     </div>
   );
 };
