@@ -13,7 +13,7 @@ const Cell = props => {
     <div
       className={classes}
       style={style}
-    ></div>
+    >{props.content}</div>
   );
 };
 
