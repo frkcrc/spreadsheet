@@ -2,7 +2,7 @@ import Cell from './cells/Cell';
 import VScrollbar from './scrollbars/VScrollbar';
 import HScrollbar from './scrollbars/HScrollbar';
 
-import styles from './Spreadsheet.module.css';
+import styles from './Spreadsheet.module.scss';
 
 // TODO: Lots of rerendering of cells going on.
 

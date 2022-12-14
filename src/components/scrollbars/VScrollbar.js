@@ -1,4 +1,4 @@
-import styles from './VScrollbar.module.css';
+import styles from './VScrollbar.module.scss';
 
 const VScrollbar = () => {
   return (

@@ -1,6 +1,6 @@
 import Spreadsheet from './components/Spreadsheet';
 
-import styles from './App.module.css';
+import styles from './App.module.scss';
 
 function App() {
   return (

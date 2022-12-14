@@ -1,4 +1,4 @@
-import styles from './Cell.module.css';
+import styles from './Cell.module.scss';
 
 const Cell = props => {
 

@@ -1,4 +1,4 @@
-import styles from './HScrollbar.module.css';
+import styles from './HScrollbar.module.scss';
 
 const HScrollbar = () => {
   return (
