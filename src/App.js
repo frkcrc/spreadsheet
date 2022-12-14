@@ -6,11 +6,11 @@ function App() {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.header}>
-        <h1>App Header Area</h1>
+        <h1>SPREADSHEET</h1>
       </div>
       <Spreadsheet />
       <div className={styles.footer}>
-        Footer - Sheets Buttons...
+        
       </div>
     </div>
   );

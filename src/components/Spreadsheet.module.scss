@@ -1,16 +1,23 @@
+@use '../styles/colors.scss';
+
 .content {
   flex: 1 1 auto; /* fluid! */
   display: flex;
   overflow: hidden;
 }
 
-.header {
-  flex: 0 0 content;
+.hContainer {
+  flex: 0 0 auto;
   display: flex;
-  background-color: white;
+}
 
-  margin-left: 50px;
-  margin-right: 30px;
+.header {
+  flex: 1 1 auto;
+  display: flex;
+  background-color: colors.$base-gray;
+
+  //margin-left: 50px;
+  //margin-right: 30px;
   overflow: hidden;
 }
 
@@ -23,7 +30,7 @@
   overflow: hidden;
 
   width: 50px;
-  background-color: #ccc;
+  background-color: colors.$base-gray;
 }
 
 .view {
@@ -34,7 +41,7 @@
   justify-content: flex-start;
   overflow: hidden;
 
-  background-color: #eee;
+  background-color: colors.$base-gray;
 }
 
 .row {  
@@ -44,10 +51,4 @@
   flex-direction: row;
   justify-content: flex-start;
   overflow: hidden;
-}
-
-.footer {
-  flex: 0 0 content;
-  display: flex;
-  background-color: white;
 }

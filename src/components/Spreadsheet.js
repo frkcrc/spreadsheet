@@ -3,6 +3,7 @@ import VScrollbar from './scrollbars/VScrollbar';
 import HScrollbar from './scrollbars/HScrollbar';
 
 import styles from './Spreadsheet.module.scss';
+import Spacer from './utils/Spacer';
 
 // TODO: Lots of rerendering of cells going on.
 
@@ -50,9 +51,14 @@ const Spreadsheet = () => {
 
   return (
     <>
-      <div className={styles.header}>
-        {colHeaders}
+      <div className={styles.hContainer}>
+        <Spacer width={rowHeadWidth} height={30} />
+        <div className={styles.header}>
+          {colHeaders}
+        </div>
+        <Spacer width={30} height={30} />
       </div>
+      
 
       <div className={styles.content}>
 
@@ -78,8 +84,10 @@ const Spreadsheet = () => {
         <VScrollbar />
       </div>
 
-      <div className={styles.footer}>
+      <div className={styles.hContainer}>
+        <Spacer width={rowHeadWidth} height={30} />
         <HScrollbar />
+        <Spacer width={30} height={30} />
       </div>
     </>
   );

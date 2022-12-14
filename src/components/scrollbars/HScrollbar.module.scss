@@ -1,18 +1,19 @@
+@use '../../styles/colors.scss';
+
 .hScrollbar {
   flex: 1 0 auto;
-
   height: 30px;
   padding: 4px;
-
-  background-color: #ccc;
-
-  margin-left: 50px;
-  margin-right: 30px;
+  background-color: colors.$base-gray;
+  border-top: 1px solid colors.$dark-gray;
 }
 
 .handle {
-  background-color: #999;
+  background-color: colors.$darker-gray;
   height: 100%;
-
   width: 200px; /* Will be dynamic. */
+}
+
+.handle:hover {
+  background-color: colors.$text-labels;
 }

@@ -1,15 +1,21 @@
+@use '../../styles/colors.scss';
+
 .vScrollbar {
   flex: 0 0 auto;
   
   width: 30px;
   padding: 4px;
 
-  background-color: #ccc;
+  background-color: colors.$base-gray;
+  border-left: 1px solid colors.$dark-gray;
 }
 
 .handle {
-  background-color: #999;
+  background-color: colors.$darker-gray;
   width: 100%;
-
   height: 200px; /* Will be dynamic. */
+}
+
+.handle:hover {
+  background-color: colors.$text-labels;
 }

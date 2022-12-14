@@ -1,11 +1,26 @@
+@use '../../styles/colors.scss';
+
 .cell {  
   flex: 0 0 auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
   background-color: white;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  border-width: 0px 1px 1px 0px;
+  border-style: solid;
+  border-color: colors.$dark-gray;
+
+  font-weight: 600;
+  color: colors.$text-cells;
+  line-height: 1.6rem;
+
 }
 
 .head {
-  background-color: #aaa;
+  font-weight: 700;
+
+  background-color: colors.$base-gray;
+  color: colors.$text-labels;
 }
