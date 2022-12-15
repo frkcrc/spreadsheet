@@ -5,49 +5,62 @@ import HScrollbar from './scrollbars/HScrollbar';
 import styles from './Spreadsheet.module.scss';
 import Spacer from './utils/Spacer';
 
-// TODO: Lots of rerendering of cells going on.
+// TODO: Cells should only be re-rendered as needed.
+// TODO: Track row/col sizing for non-defaults.
+// TODO: Is a full matrix the best data structure?
 
 const defaultWidth = 100;
-const rowHeadWidth = 50;
 const defaultHeight = 30;
-const cols = 15;
-const rows = 25;
+const rowHeadWidth = 50;
 
-// Build a dummy sheet.
-const SHEET = [];
+// Dummy sheet data.
+const cols = 10;
+const rows = 10;
+const pFill = 0.2; // Around 20% of cells are filled.
+
+// Build a dummy sheet with a few random cells.
+const SHEET = new Array(rows).fill(undefined);
+SHEET.forEach((_, i) => SHEET[i] = new Array(cols).fill(undefined));
+
 for (let row = 0; row < rows; row++) {
-  const rowVector = [];
   for (let col = 0; col < cols; col++) {
-    rowVector.push({
-      row: row+1,
-      col: col+1,
-      id: `${row}-${col}`,
-      content: Math.floor(Math.random() * 1000),
-    });
+    if (Math.random() < pFill) {
+      SHEET[row][col] = {
+        row: row+1,
+        col: col+1,
+        id: `${row}-${col}`,
+        content: Math.floor(Math.random() * 1000),
+      };
+    }
   }
-  SHEET.push(rowVector);
 }
 
 const Spreadsheet = () => {
 
-  const colHeaders = SHEET[0].map(o => 
-    <Cell 
-      head
-      width={defaultWidth}
-      height={defaultHeight}
-      content={'C' + o.col}
-      key={'C' + o.col}
-    />
-  );
-  const rowHeaders = SHEET.map((o, i) => 
-    <Cell 
-      head
-      width={rowHeadWidth}
-      height={defaultHeight}
-      content={'R' + (i+1)}
-      key={'R' + (i+1)}
-    />
-  );
+  const colHeaders = [];
+  for (let i = 1; i <= cols; i++) {
+    colHeaders.push(
+      <Cell 
+        head
+        width={defaultWidth}
+        height={defaultHeight}
+        content={'C' + i}
+        key={'C' + i}
+      />
+    );
+  }
+  const rowHeaders = [];
+  for (let i = 1; i <= rows; i++) {
+    rowHeaders.push(
+      <Cell 
+        head
+        width={rowHeadWidth}
+        height={defaultHeight}
+        content={'R' + i}
+        key={'R' + i}
+      />
+    );
+  }
 
   return (
     <>
@@ -67,14 +80,14 @@ const Spreadsheet = () => {
         </div>
 
         <div className={styles.view}>
-          {SHEET.map((row, index) => 
-            <div className={styles.row} key={index}>
-              {row.map(cell => 
+          {SHEET.map((row, rIndex) => 
+            <div className={styles.row} key={rIndex}>
+              {row.map((cell, cIndex) => 
                 <Cell
                   width={defaultWidth}
                   height={defaultHeight}
-                  content={cell.content}
-                  key={cell.id}
+                  content={cell?.content ?? ''}
+                  key={cell?.id ?? `${rIndex}-${cIndex}`}
                 />
               )}
             </div>
