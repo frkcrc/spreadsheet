@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Sheet } from "../helpers/sheet";
 
 const spreadsheetSlice = createSlice({
 
@@ -8,12 +9,7 @@ const spreadsheetSlice = createSlice({
     current: {
       // file info...
       sheets: [
-        {
-          name: 'Sheet 1',
-          cells: [
-            [ { content: '', width: 100, height: 30 } ]
-          ],
-        },
+        new Sheet('Sheet 1')
       ],
     },
     // history...
