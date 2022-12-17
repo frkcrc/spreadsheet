@@ -7,7 +7,7 @@ import HScrollbar from './scrollbars/HScrollbar';
 import styles from './Spreadsheet.module.scss';
 import Spacer from './utils/Spacer';
 import { defaultHeight, rowHeadWidth, scrollbarThickness } from '../helpers/constants';
-import { CellData } from '../helpers/sheet';
+import { CellData, colToName, nameToCol } from '../helpers/sheet';
 
 const Spreadsheet = () => {
 
@@ -15,10 +15,10 @@ const Spreadsheet = () => {
   const sheet = spreadsheet.sheets[0].cells;
 
   const colHeads = sheet[0].map((_, i) => 
-    new CellData({content: `C${i+1}`})
+    new CellData({content: colToName(i)})
   );
   const rowHeads = sheet.map((_, i) => 
-    new CellData({content: `R${i+1}`, width: rowHeadWidth})
+    new CellData({content: `${i+1}`, width: rowHeadWidth})
   );
 
   return (
