@@ -2,9 +2,29 @@
 
 .sheetBar {
   flex: 0 0 content;
-
+  background-color: red;
   /* Test sizing/color. */
   flex: 0 0 auto;
   height: 50px;
   background-color: colors.$dark-gray;
+}
+
+.addButton {
+  flex: 0 0 auto;
+
+  width: 50px;
+  height: 50px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: colors.$text-labels;
+    font-weight: 500;
+    font-size: 32px;
+  }
 }
