@@ -7,6 +7,7 @@ import HScrollbar from './scrollbars/HScrollbar';
 import styles from './Spreadsheet.module.scss';
 import Spacer from './utils/Spacer';
 import { rowHeadWidth } from '../helpers/constants';
+import { CellData } from '../helpers/sheet';
 
 const Spreadsheet = () => {
 
@@ -14,19 +15,17 @@ const Spreadsheet = () => {
   const sheet = spreadsheet.sheets[0].cells;
 
   // TODO: Build actual cells for headings to pass to Cell.
+  const colHeads = sheet[0].map((_, i) => new CellData(`C${i+1}`));
+  const rowHeads = sheet.map((_, i) => 
+    new CellData(`R${i+1}`, rowHeadWidth)
+  );
 
   return (
     <>
       <div className={styles.hContainer}>
         <Spacer width={rowHeadWidth} height={30} />
         <div className={styles.header}>
-          {sheet[0].map((c, i) => 
-            <Cell 
-              cell={ {...c, content: `C${i+1}` } }
-              key={`C${i+1}`}
-              head
-            />
-          )}
+          {colHeads.map(c => <Cell head cell={c} key={c.content} />)}
         </div>
         <Spacer width={30} height={30} />
       </div>
@@ -35,20 +34,14 @@ const Spreadsheet = () => {
       <div className={styles.content}>
 
         <div className={styles.rowHeadings}>
-          {sheet.map((r, i) => 
-            <Cell 
-              cell={ {...r[0], content: `R${i+1}`, width: rowHeadWidth } }
-              key={`R${i+1}`}
-              head
-            />
-          )}
+          {rowHeads.map(r => <Cell head cell={r} key={r.content} />)}
         </div>
 
         <div className={styles.view}>
-          {sheet.map((row, rIndex) => 
-            <div className={styles.row} key={rIndex}>
-              {row.map((cell, cIndex) => 
-                <Cell key={`${rIndex}-${cIndex}`} cell={cell} />
+          {sheet.map((row, r) => 
+            <div className={styles.row} key={r}>
+              {row.map((cell, c) => 
+                <Cell key={`${r+1}-${c+1}`} cell={cell} />
               )}
             </div>
           )}
