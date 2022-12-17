@@ -25,12 +25,3 @@
   > h1 { margin-left: 50px; font-size: 4.8rem; }
 
 }
-
-.footer {
-  flex: 0 0 content;
-
-  /* Test sizing/color. */
-  flex: 0 0 auto;
-  height: 50px;
-  background-color: colors.$dark-gray;
-}

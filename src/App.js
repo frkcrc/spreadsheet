@@ -1,4 +1,5 @@
 import Spreadsheet from './components/Spreadsheet';
+import SheetBar from './components/sheetbar/SheetBar';
 
 import styles from './App.module.scss';
 
@@ -9,9 +10,7 @@ function App() {
         <h1>SPREADSHEET</h1>
       </div>
       <Spreadsheet />
-      <div className={styles.footer}>
-        
-      </div>
+      <SheetBar />
     </div>
   );
 }
