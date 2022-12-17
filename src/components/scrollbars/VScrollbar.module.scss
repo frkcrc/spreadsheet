@@ -1,9 +1,10 @@
 @use '../../styles/colors.scss';
+@use '../../styles/variables.scss';
 
 .vScrollbar {
   flex: 0 0 auto;
   
-  width: 30px;
+  width: variables.$right-margin;
   padding: 4px;
 
   background-color: colors.$base-gray;

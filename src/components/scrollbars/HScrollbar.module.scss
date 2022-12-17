@@ -1,8 +1,9 @@
 @use '../../styles/colors.scss';
+@use '../../styles/variables.scss';
 
 .hScrollbar {
   flex: 1 0 auto;
-  height: 30px;
+  height: variables.$right-margin; // equalized to vertical bar.
   padding: 4px;
   background-color: colors.$base-gray;
   border-top: 1px solid colors.$dark-gray;
