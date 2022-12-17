@@ -3,7 +3,7 @@ import { defaultHeight, defaultWidth, startingCols, startingRows } from "./const
 // Helper functions to manipulate sheets and cells.
 
 // Cell object constructor.
-export function Cell(content = '') {
+export function CellData(content = '') {
   this.content = content;
   this.width = defaultWidth;
   this.height = defaultHeight;
@@ -20,7 +20,7 @@ export function Sheet(
   for (let i = 0; i < rows; i++) {
     this.cells[i] = [];
     for (let j = 0; j < cols; j++) {
-      this.cells[i][j] = new Cell();
+      this.cells[i][j] = new CellData();
     }
   }
 }
