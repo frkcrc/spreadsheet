@@ -3,10 +3,14 @@ import { defaultHeight, defaultWidth, startingCols, startingRows } from "./const
 // Helper functions to manipulate sheets and cells.
 
 // Cell object constructor.
-export function CellData(content = '') {
+export function CellData(
+  content = '', 
+  width = defaultWidth, 
+  height = defaultHeight
+) {
   this.content = content;
-  this.width = defaultWidth;
-  this.height = defaultHeight;
+  this.width = width;
+  this.height = height;
 }
 
 // Sheet constructor.
