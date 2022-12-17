@@ -1,12 +1,12 @@
 @use '../../styles/colors.scss';
 
 .sheetBar {
-  flex: 0 0 content;
-  background-color: red;
-  /* Test sizing/color. */
-  flex: 0 0 auto;
+  flex: 1 0 content;
+
   height: 50px;
   background-color: colors.$dark-gray;
+
+  display: flex;
 }
 
 .addButton {
@@ -27,4 +27,29 @@
     font-weight: 500;
     font-size: 32px;
   }
+}
+
+.sheetSelector {
+  flex: 0 0 content;
+
+  background-color: colors.$base-gray;
+  color: colors.$text-labels;
+  font-weight: 600;
+  cursor: pointer;
+
+  padding-left: 14px;
+  padding-right: 14px;
+  margin-left: 2px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &Active {
+    @extend .sheetSelector;
+    background-color: transparent;
+    color: colors.$text-headings;
+    cursor: default;
+  }
+
 }

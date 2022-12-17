@@ -6,6 +6,18 @@ const SheetBar = () => {
         <div className={styles.addButton}>
           <button type="button">+</button>
         </div>
+        <div className={styles.sheetSelector}>
+          <span>Sheet 1</span>
+        </div>
+        <div className={styles.sheetSelectorActive}>
+          <span>Sheet 2</span>
+        </div>
+        <div className={styles.sheetSelector}>
+          <span>Sheet 3</span>
+        </div>
+        <div className={styles.sheetSelector}>
+          <span>Sheet 4</span>
+        </div>
     </div>
   )
 };
