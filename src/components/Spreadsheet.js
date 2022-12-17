@@ -16,6 +16,8 @@ const Spreadsheet = () => {
   const spreadsheet = useSelector((state) => state.spreadsheet.current);
   const sheet = spreadsheet.sheets[0].cells;
 
+  // TODO: Build actual cells for headings to pass to Cell.
+
   return (
     <>
       <div className={styles.hContainer}>
@@ -23,11 +25,9 @@ const Spreadsheet = () => {
         <div className={styles.header}>
           {sheet[0].map((c, i) => 
             <Cell 
+              cell={ {...c, content: `C${i+1}` } }
+              key={`C${i+1}`}
               head
-              width={defaultWidth}
-              height={defaultHeight}
-              content={'C' + i}
-              key={'C' + i}
             />
           )}
         </div>
@@ -40,11 +40,9 @@ const Spreadsheet = () => {
         <div className={styles.rowHeadings}>
           {sheet.map((r, i) => 
             <Cell 
+              cell={ {...r[0], content: `R${i+1}`, width: rowHeadWidth } }
+              key={`R${i+1}`}
               head
-              width={rowHeadWidth}
-              height={defaultHeight}
-              content={'R' + i}
-              key={'R' + i}
             />
           )}
         </div>
@@ -53,12 +51,7 @@ const Spreadsheet = () => {
           {sheet.map((row, rIndex) => 
             <div className={styles.row} key={rIndex}>
               {row.map((cell, cIndex) => 
-                <Cell
-                  width={defaultWidth}
-                  height={defaultHeight}
-                  content={cell?.content ?? ''}
-                  key={cell?.id ?? `${rIndex}-${cIndex}`}
-                />
+                <Cell key={`${rIndex}-${cIndex}`} cell={cell} />
               )}
             </div>
           )}

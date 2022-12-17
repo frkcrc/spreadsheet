@@ -2,18 +2,20 @@ import styles from './Cell.module.scss';
 
 const Cell = props => {
 
+  const cell = props.cell;
+
   const classes = `${styles.cell} ${props.head && styles.head}`;
 
   const style = {
-    width: props.width,
-    height: props.height,
+    width: cell.width,
+    height: cell.height,
   };
 
   return (
     <div
       className={classes}
       style={style}
-    >{props.content}</div>
+    >{cell.content}</div>
   );
 };
 
