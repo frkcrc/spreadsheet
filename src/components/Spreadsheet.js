@@ -6,10 +6,7 @@ import HScrollbar from './scrollbars/HScrollbar';
 
 import styles from './Spreadsheet.module.scss';
 import Spacer from './utils/Spacer';
-
-const defaultWidth = 100;
-const defaultHeight = 30;
-const rowHeadWidth = 50;
+import { rowHeadWidth } from '../helpers/constants';
 
 const Spreadsheet = () => {
 
