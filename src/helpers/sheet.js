@@ -1,4 +1,10 @@
-import { defaultHeight, defaultWidth, startingCols, startingRows } from "./constants";
+import { 
+  defaultHeight, 
+  defaultSheetName, 
+  defaultWidth, 
+  startingCols, 
+  startingRows 
+} from "./constants";
 
 // Helper functions to manipulate sheets and cells.
 
@@ -15,7 +21,7 @@ export function CellData(
 
 // Sheet constructor.
 export function Sheet(
-  name = 'My Sheet', 
+  name = defaultSheetName, 
   rows = startingRows,
   cols = startingCols
 ) {

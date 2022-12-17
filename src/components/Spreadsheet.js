@@ -6,7 +6,7 @@ import HScrollbar from './scrollbars/HScrollbar';
 
 import styles from './Spreadsheet.module.scss';
 import Spacer from './utils/Spacer';
-import { rowHeadWidth } from '../helpers/constants';
+import { defaultHeight, rowHeadWidth, scrollbarThickness } from '../helpers/constants';
 import { CellData } from '../helpers/sheet';
 
 const Spreadsheet = () => {
@@ -23,11 +23,11 @@ const Spreadsheet = () => {
   return (
     <>
       <div className={styles.hContainer}>
-        <Spacer width={rowHeadWidth} height={30} />
+        <Spacer width={rowHeadWidth} height={defaultHeight} />
         <div className={styles.header}>
           {colHeads.map(c => <Cell head cell={c} key={c.content} />)}
         </div>
-        <Spacer width={30} height={30} />
+        <Spacer width={scrollbarThickness} height={defaultHeight} />
       </div>
       
 
@@ -51,9 +51,9 @@ const Spreadsheet = () => {
       </div>
 
       <div className={styles.hContainer}>
-        <Spacer width={rowHeadWidth} height={30} />
+        <Spacer width={rowHeadWidth} height={scrollbarThickness} />
         <HScrollbar />
-        <Spacer width={30} height={30} />
+        <Spacer width={scrollbarThickness} height={defaultHeight} />
       </div>
     </>
   );
