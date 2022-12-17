@@ -26,7 +26,7 @@ const Spreadsheet = () => {
       <div className={styles.hContainer}>
         <Spacer width={rowHeadWidth} height={defaultHeight} />
         <div className={styles.header}>
-          {colHeads.map(c => <Cell head cell={c} key={c.content} />)}
+          {colHeads.map((c, i) => <Cell head cell={c} key={i} />)}
         </div>
         <Spacer width={scrollbarThickness} height={defaultHeight} />
       </div>
@@ -35,14 +35,14 @@ const Spreadsheet = () => {
       <div className={styles.content}>
 
         <div className={styles.rowHeadings}>
-          {rowHeads.map(r => <Cell head cell={r} key={r.content} />)}
+          {rowHeads.map((r, i) => <Cell head cell={r} key={i} />)}
         </div>
 
         <div className={styles.view}>
           {sheet.map((row, r) => 
             <div className={styles.row} key={r}>
               {row.map((cell, c) => 
-                <Cell key={`${r+1}-${c+1}`} cell={cell} />
+                <Cell key={c} cell={cell} />
               )}
             </div>
           )}
