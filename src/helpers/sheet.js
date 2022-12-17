@@ -9,14 +9,13 @@ import {
 // Helper functions to manipulate sheets and cells.
 
 // Cell object constructor.
-export function CellData(
-  content = '', 
-  width = defaultWidth, 
-  height = defaultHeight
-) {
-  this.content = content;
-  this.width = width;
-  this.height = height;
+export function CellData(params = {}) {
+  return {
+    content: '',
+    width: defaultWidth,
+    height: defaultHeight,
+    ...params
+  };
 }
 
 // Sheet constructor.

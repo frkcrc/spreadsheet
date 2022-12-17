@@ -14,10 +14,11 @@ const Spreadsheet = () => {
   const spreadsheet = useSelector((state) => state.spreadsheet.current);
   const sheet = spreadsheet.sheets[0].cells;
 
-  // TODO: Build actual cells for headings to pass to Cell.
-  const colHeads = sheet[0].map((_, i) => new CellData(`C${i+1}`));
+  const colHeads = sheet[0].map((_, i) => 
+    new CellData({content: `C${i+1}`})
+  );
   const rowHeads = sheet.map((_, i) => 
-    new CellData(`R${i+1}`, rowHeadWidth)
+    new CellData({content: `R${i+1}`, width: rowHeadWidth})
   );
 
   return (
