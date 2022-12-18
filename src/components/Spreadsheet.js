@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import Cell from './cells/Cell';
-import VScrollbar from './scrollbars/VScrollbar';
-import HScrollbar from './scrollbars/HScrollbar';
+import Scrollbar from './view/Scrollbar';
 
 import styles from './Spreadsheet.module.scss';
 import Spacer from './utils/Spacer';
@@ -48,12 +47,12 @@ const Spreadsheet = () => {
           )}
         </div>
 
-        <VScrollbar />
+        <Scrollbar orientation="vertical" />
       </div>
 
       <div className={styles.hContainer}>
         <Spacer width={rowHeadWidth} height={scrollbarThickness} />
-        <HScrollbar />
+        <Scrollbar orientation="horizontal" />
         <Spacer width={scrollbarThickness} height={defaultHeight} />
       </div>
     </>
