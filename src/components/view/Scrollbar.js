@@ -7,10 +7,10 @@ const Scrollbar = props => {
   const [offset, setOffset] = useState(0);
   const [pointerId, setPointerId] = useState(undefined);
 
-  const orientation = props.orientation;
+  const axis = props.axis;
 
   const handleStyle = {};
-  if (orientation === 'horizontal') {
+  if (axis === 'x') {
     handleStyle.width = props.size;
     handleStyle.left = offset + 'px';
   } else {
@@ -21,7 +21,7 @@ const Scrollbar = props => {
   const startDraggingHandler = event => {
     setPointerId(event.pointerId);
     setLastPos(
-      (orientation === 'horizontal' ? event.clientX : event.clientY)
+      (axis === 'x' ? event.clientX : event.clientY)
     );
     event.target.setPointerCapture(event.pointerId);
   };
@@ -34,7 +34,7 @@ const Scrollbar = props => {
   const draggingHandler = event => {
     if (!pointerId) return;
     const currentPos = 
-      (orientation === 'horizontal' ? event.clientX : event.clientY);
+      (axis === 'x' ? event.clientX : event.clientY);
     const delta = currentPos - lastPos;
     setOffset((oldOffset) => {
       const newOffset = oldOffset+delta;
@@ -44,7 +44,7 @@ const Scrollbar = props => {
   };
 
   return (
-    <div className={styles[orientation]}>
+    <div className={styles[axis]}>
       <div
         className={styles.handle}
         style={handleStyle}

@@ -16,7 +16,7 @@
 }
 
 
-.horizontal {
+.x {
   @extend .scrollbar;
 
   flex: 1 0 auto;
@@ -30,7 +30,7 @@
 
 }
 
-.vertical {
+.y {
   @extend .scrollbar;
 
   flex: 0 0 auto;
