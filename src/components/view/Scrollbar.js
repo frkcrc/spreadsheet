@@ -11,20 +11,19 @@ const Scrollbar = props => {
 
   const {axis, view} = props;
 
-  // TODO: Offset should also be a ratio of total, and be responsive.
-
   // Calculate dimensions and style the handler.
   // The view prop is the fraction of the sheet that can be shown at once;
   // the handle of the scrollbar will the same fraction of the length.
   // TODO: Handle a ratio >= 1, which means no handle should be shown.
   const size = troughLength * view;
+  const offsetPx = offset * troughLength;
   const handleStyle = {};
   if (axis === 'x') {
     handleStyle.width = size;
-    handleStyle.left = offset + 'px';
+    handleStyle.left = offsetPx + 'px';
   } else {
     handleStyle.height = size;
-    handleStyle.top = offset + 'px';
+    handleStyle.top = offsetPx + 'px';
   }
 
   // Effect to update the length on render and on resize.
@@ -61,8 +60,8 @@ const Scrollbar = props => {
     if (!pointerId) return;
     const currentPos = 
       (axis === 'x' ? event.clientX : event.clientY);
-    const maxOffset = troughLength - size;
-    const delta = currentPos - lastPos;
+    const maxOffset = 1 - view;
+    const delta = (currentPos - lastPos) / troughLength;
     setOffset((oldOffset) => {
       const newOffset = oldOffset+delta;
       return Math.min(maxOffset, Math.max(0, newOffset));
