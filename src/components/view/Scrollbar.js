@@ -17,7 +17,7 @@ const Scrollbar = props => {
   // The view prop is the fraction of the sheet that can be shown at once;
   // the handle of the scrollbar will the same fraction of the length.
   // TODO: Handle a ratio >= 1, which means no handle should be shown.
-  const size = (troughLength - 8) * view;
+  const size = troughLength * view;
   const handleStyle = {};
   if (axis === 'x') {
     handleStyle.width = size;
@@ -32,10 +32,11 @@ const Scrollbar = props => {
   // everything else adapts as the component gets re-rendered.
   useLayoutEffect(() => {
     const calculate = () => {
+      // The subtracted values are padding + borders.
       if (axis === 'x') {
-        setTroughLength(scrollbarRef.current.clientWidth);
+        setTroughLength(scrollbarRef.current.clientWidth - 8);
       } else {
-        setTroughLength(scrollbarRef.current.clientHeight);
+        setTroughLength(scrollbarRef.current.clientHeight - 9);
       }
     };
     calculate();
@@ -60,7 +61,7 @@ const Scrollbar = props => {
     if (!pointerId) return;
     const currentPos = 
       (axis === 'x' ? event.clientX : event.clientY);
-    const maxOffset = troughLength - size - 8; // 8 = padding in the trough.
+    const maxOffset = troughLength - size;
     const delta = currentPos - lastPos;
     setOffset((oldOffset) => {
       const newOffset = oldOffset+delta;
