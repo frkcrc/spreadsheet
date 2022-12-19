@@ -47,12 +47,12 @@ const Spreadsheet = () => {
           )}
         </div>
 
-        <Scrollbar axis="y" size={200} />
+        <Scrollbar axis="y" view={0.5} />
       </div>
 
       <div className={styles.hContainer}>
         <Spacer width={rowHeadWidth} height={scrollbarThickness} />
-        <Scrollbar axis="x" size={200} />
+        <Scrollbar axis="x" view={0.2} />
         <Spacer width={scrollbarThickness} height={defaultHeight} />
       </div>
     </>
