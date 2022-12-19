@@ -14,8 +14,7 @@ const Scrollbar = props => {
   // Calculate dimensions and style the handler.
   // The view prop is the fraction of the sheet that can be shown at once;
   // the handle of the scrollbar will the same fraction of the length.
-  // TODO: Handle a ratio >= 1, which means no handle should be shown.
-  const size = troughLength * view;
+  const size = (view >= 1 ? 0 : troughLength * view);
   const offsetPx = offset * troughLength;
   const handleStyle = {};
   if (axis === 'x') {
