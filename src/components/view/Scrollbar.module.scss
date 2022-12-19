@@ -46,3 +46,9 @@ $padding: 4px;
     width: 100%;
   }
 }
+
+.jump {
+  transition-property: top, left;
+  transition-duration: 0.2s;
+  transition-timing-function: easy-out;
+}

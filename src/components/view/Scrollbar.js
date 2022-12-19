@@ -8,6 +8,7 @@ const Scrollbar = props => {
   const [lastPos, setLastPos] = useState(0);
   const [offset, setOffset] = useState(0);
   const [pointerId, setPointerId] = useState(undefined);
+  const [jump, setJump] = useState(false);
 
   const {axis, view} = props;
 
@@ -23,6 +24,12 @@ const Scrollbar = props => {
   } else {
     handleStyle.height = size;
     handleStyle.top = offsetPx + 'px';
+  }
+
+  // Build classes for the handle.
+  const handleClasses = [styles.handle];
+  if (jump) { // Transition class, only active on click.
+    handleClasses.push(styles.jump);
   }
 
   // Effect to update the length on render and on resize.
@@ -88,6 +95,11 @@ const Scrollbar = props => {
         const newOffset = Math.min(1 - view, Math.max(0, targetOffset));
         setOffset(newOffset);
       }
+      // Set the transition class and timeout its removal.
+      setJump(true);
+      setTimeout(() => {
+        setJump(false);
+      }, 200);
     }
   };
 
@@ -98,7 +110,7 @@ const Scrollbar = props => {
       onClick={troughClickHandler}
     >
       <div
-        className={styles.handle}
+        className={handleClasses.join(' ')}
         style={handleStyle}
         onPointerDown={startDraggingHandler}
         onPointerUp={stopDraggingHandler}
