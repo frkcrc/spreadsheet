@@ -1,9 +1,12 @@
 @use '../../styles/colors.scss';
 @use '../../styles/variables.scss';
 
+$padding: 4px;
+
 .scrollbar {
-  padding: 4px;
+  padding: $padding;
   background-color: colors.$base-gray;
+  box-sizing: content-box;
 }
 
 .handle {
@@ -20,9 +23,10 @@
   @extend .scrollbar;
 
   flex: 1 0 auto;
-  height: variables.$right-margin; // equalized to vertical bar.
+  height: variables.$right-margin - (2 * $padding + 2); // equalized to y bar.
 
   border-top: 1px solid colors.$dark-gray;
+  border-bottom: 1px solid colors.$dark-gray;
 
   .handle {
     height: 100%;
@@ -34,7 +38,7 @@
   @extend .scrollbar;
 
   flex: 0 0 auto;
-  width: variables.$right-margin;
+  width: variables.$right-margin - (2 * $padding + 1);
 
   border-left: 1px solid colors.$dark-gray;
 
