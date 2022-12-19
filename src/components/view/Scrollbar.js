@@ -69,8 +69,34 @@ const Scrollbar = props => {
     // TODO: Add callback to notify the view when the user scrolls.
   };
 
+  const troughClickHandler = event => {
+    // Check target to ignore handle clicks.
+    if (event.target === scrollbarRef.current) {
+      // Calculate the offset that would position the *center* of the 
+      // handle at the clicked point (within boundaries).
+      const bcr = scrollbarRef.current.getBoundingClientRect();
+      if (axis === 'x') {
+        const relativeX = event.clientX - (bcr.left + 4);
+        const relativeOffset = relativeX / troughLength;
+        const targetOffset = relativeOffset - (view / 2);
+        const newOffset = Math.min(1 - view, Math.max(0, targetOffset));
+        setOffset(newOffset);
+      } else {
+        const relativeY = event.clientY - (bcr.top + 4);
+        const relativeOffset = relativeY / troughLength;
+        const targetOffset = relativeOffset - (view / 2);
+        const newOffset = Math.min(1 - view, Math.max(0, targetOffset));
+        setOffset(newOffset);
+      }
+    }
+  };
+
   return (
-    <div className={styles[axis]} ref={scrollbarRef}>
+    <div
+      className={styles[axis]}
+      ref={scrollbarRef}
+      onClick={troughClickHandler}
+    >
       <div
         className={styles.handle}
         style={handleStyle}
