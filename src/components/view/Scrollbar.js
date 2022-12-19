@@ -30,11 +30,11 @@ const Scrollbar = props => {
   // everything else adapts as the component gets re-rendered.
   useLayoutEffect(() => {
     const calculate = () => {
-      // The subtracted values are padding + borders.
+      // The subtracted values are the padding.
       if (axis === 'x') {
         setTroughLength(scrollbarRef.current.clientWidth - 8);
       } else {
-        setTroughLength(scrollbarRef.current.clientHeight - 9);
+        setTroughLength(scrollbarRef.current.clientHeight - 8);
       }
     };
     calculate();
