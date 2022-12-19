@@ -4,7 +4,11 @@ const Cell = props => {
 
   const cell = props.cell;
 
-  const classes = `${styles.cell} ${props.head && styles.head}`;
+  // Build classes for the cell.
+  const classes = [styles.cell];
+  if (props.head) {
+    classes.push(styles.head);
+  }
 
   const style = {
     width: cell.width,
@@ -13,7 +17,7 @@ const Cell = props => {
 
   return (
     <div
-      className={classes}
+      className={classes.join(' ')}
       style={style}
     >{cell.content}</div>
   );
