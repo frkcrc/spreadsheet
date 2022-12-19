@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styles from './Scrollbar.module.scss';
 
 const Scrollbar = props => {
 
+  const scrollbarRef = useRef();
   const [lastPos, setLastPos] = useState(0);
   const [offset, setOffset] = useState(0);
   const [pointerId, setPointerId] = useState(undefined);
 
-  const axis = props.axis;
+  const {axis, size} = props;
 
   const handleStyle = {};
   if (axis === 'x') {
-    handleStyle.width = props.size;
+    handleStyle.width = size;
     handleStyle.left = offset + 'px';
   } else {
-    handleStyle.height = props.size;
+    handleStyle.height = size;
     handleStyle.top = offset + 'px';
   }
 
@@ -35,16 +36,20 @@ const Scrollbar = props => {
     if (!pointerId) return;
     const currentPos = 
       (axis === 'x' ? event.clientX : event.clientY);
+    const maxOffset = 
+      (axis === 'x' ? 
+        scrollbarRef.current.clientWidth - size - 8 : 
+        scrollbarRef.current.clientHeight - size - 8 );
     const delta = currentPos - lastPos;
     setOffset((oldOffset) => {
       const newOffset = oldOffset+delta;
-      return (newOffset >= 0 ? newOffset : 0);
+      return Math.min(maxOffset, Math.max(0, newOffset));
     });
     setLastPos(currentPos);
   };
 
   return (
-    <div className={styles[axis]}>
+    <div className={styles[axis]} ref={scrollbarRef}>
       <div
         className={styles.handle}
         style={handleStyle}
