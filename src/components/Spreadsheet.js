@@ -11,7 +11,8 @@ import { CellData, colToName, nameToCol } from '../helpers/sheet';
 const Spreadsheet = () => {
 
   const spreadsheet = useSelector((state) => state.spreadsheet.current);
-  const sheet = spreadsheet.sheets[0].cells;
+  const selected = spreadsheet.selected;
+  const sheet = spreadsheet.sheets[selected].cells;
 
   const colHeads = sheet[0].map((_, i) => 
     new CellData({content: colToName(i)})
