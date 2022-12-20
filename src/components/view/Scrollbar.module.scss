@@ -37,7 +37,7 @@ $padding: 4px;
 .y {
   @extend .scrollbar;
 
-  flex: 0 0 auto;
+  flex: 1 0 auto;
   width: variables.$right-margin - (2 * $padding + 1);
 
   border-left: 1px solid colors.$dark-gray;

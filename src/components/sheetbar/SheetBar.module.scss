@@ -2,7 +2,7 @@
 @use '../../styles/variables.scss';
 
 .sheetBar {
-  flex: 1 0 content;
+  flex: 0 0 content;
 
   height: 50px;
   background-color: colors.$dark-gray;

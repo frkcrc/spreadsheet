@@ -1,0 +1,52 @@
+@use '../../styles/colors.scss';
+@use '../../styles/variables.scss';
+
+.header {
+  flex: 0 0 auto;
+
+  display: flex;
+  flex-direction: row;
+
+  .colHeaders {
+    flex: 1 1 auto;
+    display: flex;
+    background-color: colors.$base-gray;
+  }
+}
+
+.content {
+  flex: 1 1 auto; /* fluid! */
+  display: flex;
+  overflow: hidden;
+  
+  .rowHeadings {
+    flex: 0 0 auto;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+  
+    width: variables.$left-margin;
+    background-color: colors.$base-gray;
+  }
+
+  .view {
+    flex: 1 1 auto; /* fluid! */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+  
+    background-color: colors.$base-gray;
+  }
+  .row {
+    flex: 0 0 auto; /* do NOT adapt! */
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+}

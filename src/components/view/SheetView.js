@@ -1,14 +1,13 @@
 import { useSelector } from 'react-redux';
 
-import Cell from './cells/Cell';
-import Scrollbar from './view/Scrollbar';
+import Cell from '../cells/Cell';
+import Spacer from '../utils/Spacer';
 
-import styles from './Spreadsheet.module.scss';
-import Spacer from './utils/Spacer';
-import { defaultHeight, rowHeadWidth, scrollbarThickness } from '../helpers/constants';
-import { CellData, colToName, nameToCol } from '../helpers/sheet';
+import styles from './SheetView.module.scss';
+import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
+import { CellData, colToName } from '../../helpers/sheet';
 
-const Spreadsheet = () => {
+const SheetView = props => {
 
   const spreadsheet = useSelector((state) => state.spreadsheet.current);
   const selected = spreadsheet.selected;
@@ -23,15 +22,13 @@ const Spreadsheet = () => {
 
   return (
     <>
-      <div className={styles.hContainer}>
+      <div className={styles.header}>
         <Spacer width={rowHeadWidth} height={defaultHeight} />
-        <div className={styles.header}>
+        <div className={styles.colHeaders}>
           {colHeads.map((c, i) => <Cell head cell={c} key={i} />)}
         </div>
-        <Spacer width={scrollbarThickness} height={defaultHeight} />
       </div>
       
-
       <div className={styles.content}>
 
         <div className={styles.rowHeadings}>
@@ -47,17 +44,9 @@ const Spreadsheet = () => {
             </div>
           )}
         </div>
-
-        <Scrollbar axis="y" view={0.5} />
-      </div>
-
-      <div className={styles.hContainer}>
-        <Spacer width={rowHeadWidth} height={scrollbarThickness} />
-        <Scrollbar axis="x" view={0.2} />
-        <Spacer width={scrollbarThickness} height={defaultHeight} />
       </div>
     </>
   );
 };
 
-export default Spreadsheet;
+export default SheetView;
