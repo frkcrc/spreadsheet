@@ -13,6 +13,7 @@ const spreadsheetSlice = createSlice({
         new Sheet('Sheet 2'),
         new Sheet('Sheet 3')
       ],
+      selected: 0,
     },
     // history...
   },
