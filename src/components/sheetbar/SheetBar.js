@@ -1,23 +1,24 @@
+import { useSelector } from 'react-redux';
 import styles from './SheetBar.module.scss';
 
 const SheetBar = () => {
+
+  const spreadsheet = useSelector((state) => state.spreadsheet.current);
+  const selected = spreadsheet.selected;
+
+  const getClass = (i) =>
+    selected === i ? styles.sheetSelectorActive : styles.sheetSelector;
+
   return (
     <div className={styles.sheetBar}>
         <div className={styles.addButton}>
           <button type="button">+</button>
         </div>
-        <div className={styles.sheetSelector}>
-          <span>Sheet 1</span>
-        </div>
-        <div className={styles.sheetSelectorActive}>
-          <span>Sheet 2</span>
-        </div>
-        <div className={styles.sheetSelector}>
-          <span>Sheet 3</span>
-        </div>
-        <div className={styles.sheetSelector}>
-          <span>Sheet 4</span>
-        </div>
+        {spreadsheet.sheets.map((s, i) => 
+          <div className={getClass(i)}>
+            <span>{s.name}</span>
+          </div>
+        )}
     </div>
   )
 };
