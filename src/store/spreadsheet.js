@@ -9,7 +9,9 @@ const spreadsheetSlice = createSlice({
     current: {
       // file info...
       sheets: [
-        new Sheet('Sheet 1')
+        new Sheet('Sheet 1'),
+        new Sheet('Sheet 2'),
+        new Sheet('Sheet 3')
       ],
     },
     // history...
