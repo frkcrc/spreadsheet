@@ -27,6 +27,7 @@ const SheetBar = () => {
           <div
             className={getClass(i)}
             onClick={() => selectSheet(i)}
+            key={i}
           >
             <span>{s.name}</span>
           </div>
