@@ -19,7 +19,9 @@ const spreadsheetSlice = createSlice({
   },
 
   reducers: {
-    
+    selectSheet: (state, action) => {
+      state.current.selected = action.payload;
+    }
   }
 });
 
