@@ -24,14 +24,16 @@ export function Sheet(
   rows = startingRows,
   cols = startingCols
 ) {
-  this.name = name;
-  this.cells = [];
+  const sheet = {};
+  sheet.name = name;
+  sheet.cells = [];
   for (let i = 0; i < rows; i++) {
-    this.cells[i] = [];
+    sheet.cells[i] = [];
     for (let j = 0; j < cols; j++) {
-      this.cells[i][j] = new CellData();
+      sheet.cells[i][j] = new CellData();
     }
   }
+  return sheet;
 }
 
 // Converts a 0-based column number to a letter-based ID.
