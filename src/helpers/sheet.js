@@ -19,13 +19,13 @@ export function CellData(params = {}) {
 }
 
 // Sheet constructor.
-export function Sheet(
-  name = defaultSheetName, 
-  rows = startingRows,
-  cols = startingCols
-) {
+export function Sheet(name, sheetRows, sheetCols) {
+  const rows = sheetRows ?? startingRows;
+  const cols = sheetCols ?? startingCols;
+
   const sheet = {};
-  sheet.name = name;
+  sheet.name = name ?? defaultSheetName;
+
   sheet.cells = [];
   for (let i = 0; i < rows; i++) {
     sheet.cells[i] = [];
@@ -33,6 +33,12 @@ export function Sheet(
       sheet.cells[i][j] = new CellData();
     }
   }
+
+  sheet.startRow = 0;
+  sheet.startCol = 0;
+
+  Object.assign(sheet, calculateView(sheet.cells));
+
   return sheet;
 }
 
@@ -58,4 +64,34 @@ export function nameToCol(name) {
     col += ordinal * (26 ** i);
   }
   return col;
+}
+
+// Calculates data to determine the sheet's view.
+// Boundaries are the fractions of the total width/height where the row or
+// column starts (eg: 0.5 = col starts at the middle of the total w).
+// Height and width are the total in pixel.
+export function calculateView(cells) {
+  // Extract all widths/heights.
+  const colWidths = cells[0].map(c => c.width);
+  const rowHeights = cells.map(r => r[0].height);
+  // Sum of all widths/heights.
+  const width = colWidths.reduce((x, y) => x+y, 0);
+  const height = rowHeights.reduce((x, y) => x+y, 0);
+  // Partial sums as a fraction of the total.
+  const boundariesCols = [], boundariesRows = [];
+  colWidths.reduce((acc, c) => {
+    boundariesCols.push(acc/width);
+    return acc+c;
+  }, 0);
+  rowHeights.reduce((acc, r) => {
+    boundariesRows.push(acc/height);
+    return acc+r;
+  }, 0);
+
+  return {
+    boundariesCols,
+    boundariesRows,
+    width,
+    height
+  };
 }
