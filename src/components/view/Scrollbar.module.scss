@@ -26,7 +26,7 @@ $padding: 4px;
   height: variables.$right-margin - (2 * $padding + 2); // equalized to y bar.
 
   border-top: 1px solid colors.$dark-gray;
-  border-bottom: 1px solid colors.$dark-gray;
+  //border-bottom: 1px solid colors.$dark-gray;
 
   .handle {
     height: 100%;

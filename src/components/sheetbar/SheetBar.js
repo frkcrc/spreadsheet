@@ -23,15 +23,18 @@ const SheetBar = () => {
         <div className={styles.addButton}>
           <button type="button">+</button>
         </div>
-        {spreadsheet.sheets.map((s, i) => 
-          <div
-            className={getClass(i)}
-            onClick={() => selectSheet(i)}
-            key={i}
-          >
-            <span>{s.name}</span>
-          </div>
-        )}
+        <div className={styles.selectorsContainer}>
+          {spreadsheet.sheets.map((s, i) => 
+            <div
+              className={getClass(i)}
+              onClick={() => selectSheet(i)}
+              key={i}
+            >
+              <span>{s.name}</span>
+            </div>
+          )}
+        </div>
+        
     </div>
   )
 };
