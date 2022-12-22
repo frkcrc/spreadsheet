@@ -18,6 +18,14 @@ const spreadsheetSlice = createSlice({
     selectSheet: (state, action) => {
       state.selected = action.payload;
     },
+    setOffset: (state, action) => {
+      const id = state.selected;
+      if ('x' in action.payload) {
+        state.sheets[id].view.cols.offset = action.payload.x;
+      } else {
+        state.sheets[id].view.rows.offset = action.payload.y;
+      }
+    },
     setViewStart: (state, action) => {
       const id = state.selected;
       if ('row' in action.payload) {
