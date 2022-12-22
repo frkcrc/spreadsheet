@@ -67,8 +67,7 @@ export function nameToCol(name) {
 // Boundaries are the fractions of the total width/height where the row or
 // column starts (eg: 0.5 = col starts at the middle of the total w).
 // Height and width are the total in pixel.
-// Hash is meant to provide a way for components to easily see when a new
-// view should be rendered (because it's recalculated or the sheet changes).
+// Offset is the offset from the start of the current view, in pixels.
 export function calculateView(cells) {
   // Extract all widths/heights.
   const colWidths = cells[0].map(c => c.width);
@@ -94,12 +93,14 @@ export function calculateView(cells) {
       total: height,
       boundaries: boundariesRows,
       start: 0,
+      offset: 0
     },
     cols: {
       sizes: colWidths,
       total: width,
       boundaries: boundariesCols,
       start: 0,
+      offset: 0
     },
   };
 }
