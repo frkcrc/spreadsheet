@@ -1,14 +1,21 @@
+import { useDispatch, useSelector } from "react-redux";
 import Spacer from "./utils/Spacer";
 import Scrollbar from "./view/Scrollbar";
 import SheetView from "./view/SheetView";
 import { defaultHeight, rowHeadWidth, scrollbarThickness } from '../helpers/constants';
 
+import { spreadsheetActions } from "../store/spreadsheet";
 import styles from './SheetPane.module.scss';
 
 const SheetPane = () => {
 
+  const dispatch = useDispatch();
+  const onWheelHandler = e => {
+    //dispatch(spreadsheetActions.setOffset());
+  };
+
   return (
-    <div className={styles.sheetArea}>
+    <div className={styles.sheetArea} onWheel={onWheelHandler}>
       <div className={styles.middleContent}>
         <div className={styles.view}>
           <SheetView />
