@@ -27,29 +27,30 @@ const SheetView = () => {
   }, []);
 
   // Extract the relevant state.
-  const { cells, view } = useSelector((state) => {
+  const { cells, rows, cols } = useSelector((state) => {
     const id = state.spreadsheet.selected;
     const cells = state.spreadsheet.sheets[id].cells;
-    const view = state.spreadsheet.sheets[id].view;
-    return { cells, view };
+    const rows = state.spreadsheet.sheets[id].view.rows;
+    const cols = state.spreadsheet.sheets[id].view.cols;
+    return { cells, rows, cols };
   });
 
   // Define the visible range to display in the view.
   const range = {
     rows: {
-      start: view.rows.start, 
-      end: view.rows.sizes.length - 1,
+      start: rows.start, 
+      end: rows.sizes.length - 1,
     },
     cols: {
-      start: view.cols.start, 
-      end: view.cols.sizes.length - 1,
+      start: cols.start, 
+      end: cols.sizes.length - 1,
     },
   };
 
   // If the view size is defined, calculate visible range.
   if (viewSize) {
-    range.cols.end = visibleRange(viewSize.width, view.cols);
-    range.rows.end = visibleRange(viewSize.height, view.rows);
+    range.cols.end = visibleRange(viewSize.width, cols);
+    range.rows.end = visibleRange(viewSize.height, rows);
   }
 
   // Build the headings.
