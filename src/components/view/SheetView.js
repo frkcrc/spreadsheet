@@ -5,7 +5,7 @@ import Spacer from '../utils/Spacer';
 
 import styles from './SheetView.module.scss';
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
-import { CellData, colToName } from '../../helpers/sheet';
+import { CellData, colToName, visibleRange } from '../../helpers/sheet';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 const SheetView = () => {
@@ -34,13 +34,39 @@ const SheetView = () => {
     return { cells, view };
   });
 
-  // Build the view.
-  const colHeads = cells[0].map((_, i) => 
-    new CellData({content: colToName(i)})
-  );
-  const rowHeads = cells.map((_, i) => 
-    new CellData({content: `${i+1}`, width: rowHeadWidth})
-  );
+  // Define the visible range to display in the view.
+  const range = {
+    rows: {
+      start: view.rows.start, 
+      end: view.rows.sizes.length - 1,
+    },
+    cols: {
+      start: view.cols.start, 
+      end: view.cols.sizes.length - 1,
+    },
+  };
+
+  // If the view size is defined, calculate visible range.
+  if (viewSize) {
+    range.cols.end = visibleRange(viewSize.width, view.cols);
+    range.rows.end = visibleRange(viewSize.height, view.rows);
+  }
+
+  // Build the headings.
+
+  // Build the view in the visible range.
+  const colHeads = cells[0]
+    .slice(range.cols.start, range.cols.end + 1)
+    .map((_, i) => new CellData({
+      content: colToName(range.cols.start + i)
+    }));
+  
+  const rowHeads = cells
+    .slice(range.rows.start, range.rows.end + 1)
+    .map((_, i) => new CellData({
+      content: `${range.rows.start+i+1}`,
+      width: rowHeadWidth,
+    }));
 
   return (
     <>
@@ -58,13 +84,17 @@ const SheetView = () => {
         </div>
 
         <div className={styles.view} ref={viewRef}>
-          {cells.map((row, r) => 
-            <div className={styles.row} key={r}>
-              {row.map((cell, c) => 
-                <Cell key={c} cell={cell} />
-              )}
-            </div>
-          )}
+          {cells
+            .slice(range.rows.start, range.rows.end + 1)
+            .map((row, r) => 
+              <div className={styles.row} key={r}>
+                {row
+                  .slice(range.cols.start, range.cols.end + 1)
+                  .map((cell, c) => 
+                    <Cell key={c} cell={cell} />
+                  )}
+              </div>
+            )}
         </div>
       </div>
     </>
