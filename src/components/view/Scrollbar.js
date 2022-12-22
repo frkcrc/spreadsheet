@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './Scrollbar.module.scss';
@@ -6,10 +6,8 @@ import styles from './Scrollbar.module.scss';
 const Scrollbar = props => {
 
   const barRef = useRef();
-  const [barHash, setBarHash] = useState(''); // View hash in use.
-  const [viewLength, setViewLength] = useState(0);
-  const [lastPos, setLastPos] = useState(0);
-  const [offset, setOffset] = useState(0);
+  const [viewSize, setViewSize] = useState(0);
+  const [barAnchor, setBarAnchor] = useState(0);
   const [pointerId, setPointerId] = useState(undefined);
   const [jump, setJump] = useState(false);
 
@@ -17,60 +15,47 @@ const Scrollbar = props => {
   const isX = axis === 'x'; // Convenience for direction checks.
 
   // Extract the relevant state.
-  const {viewHash, view} = useSelector((state) => {
+  const {total, offset} = useSelector((state) => {
     const id = state.spreadsheet.selected;
     const view = state.spreadsheet.sheets[id].view;
-    return {
-      viewHash: view.hash,
-      view: (isX ? view.cols : view.rows),
-    };
+    return (isX ? view.cols : view.rows);
   });
   const dispatch = useDispatch();
 
   // Calculate derived properties.
-  const troughLength = viewLength - 8; // View - padding.
-  const visibleSlice = viewLength / view.total; // Visible piece of sheet.
-  const size = visibleSlice >= 1 ? 0 : (troughLength * visibleSlice);
-  const offsetPx = offset * troughLength;
+  const troughLength = viewSize - 8; // View - padding.
+  const visibleSlice = viewSize / total; // Visible fraction of sheet.
+  const ratio = total / troughLength; // Ratio between doc and bar size.
+  const offsetSize = (offset / total) * troughLength;
+  const handleSize = visibleSlice >= 1 ? 0 : (troughLength * visibleSlice);
+  const offsetMaxSize = troughLength - handleSize;
 
   // Effect to set the size responsively.
   useLayoutEffect(() => {
-    const calculateSize = () => {
+    const calculate = () => {
       const bar = barRef.current;
-      setViewLength(isX ? bar.clientWidth : bar.clientHeight);
+      setViewSize(isX ? bar.clientWidth : bar.clientHeight);
+      const bcr = bar.getBoundingClientRect();
+      setBarAnchor(isX ? (bcr.left + 4) : (bcr.top + 4));
     };
-    calculateSize();
-    window.addEventListener('resize', calculateSize);
-    return _ => window.removeEventListener('resize', calculateSize);
+    calculate();
+    window.addEventListener('resize', calculate);
+    return _ => window.removeEventListener('resize', calculate);
   }, [isX, barRef]);
 
-  // Effect to reset the scrollbar when the view changes.
-  useEffect(() => {
-    if (barHash !== viewHash) {
-      setBarHash(viewHash);
-      setOffset(view.boundaries[view.start]);
-    }
-  }, [viewHash, barHash, view.boundaries, view.start, troughLength]);
-
-  // Effect to set the view starting point according to offset changes.
-  useEffect(() => {
-    if (barHash !== viewHash) // Don't run if the bar has to reset.
-      return;
-    let start = 0;
-    while (offset > view.boundaries[start])
-      start++;
-    if (view.start !== start) {
-      const payload = { [isX? 'col' : 'row']: start };
-      dispatch(spreadsheetActions.setViewStart(payload));
-    }
-    
-  }, [offset, isX, view.boundaries, view.start, dispatch, barHash, viewHash]);
+  // Positions the bar at the given position (ie the mouse pointer).
+  const positionScrollbar = position => {
+    const onBarPos = position - barAnchor;
+    const targetOffset = onBarPos - handleSize/2;
+    const fixedOffset = 
+      Math.min(offsetMaxSize, Math.max(0, targetOffset));
+    dispatch(spreadsheetActions.setOffset({[axis]: fixedOffset * ratio}));
+  }
 
   // Event handlers.
 
   const startDraggingHandler = e => {
     setPointerId(e.pointerId);
-    setLastPos(isX ? e.clientX : e.clientY);
     e.target.setPointerCapture(e.pointerId);
   };
 
@@ -81,28 +66,13 @@ const Scrollbar = props => {
 
   const draggingHandler = e => {
     if (!pointerId) return;
-    const currentPos = (isX ? e.clientX : e.clientY);
-    const maxOffset = 1 - visibleSlice;
-    const delta = (currentPos - lastPos) / troughLength;
-    setOffset((old) => Math.min(maxOffset, Math.max(0, old + delta)));
-    setLastPos(currentPos);
+    positionScrollbar(isX ? e.clientX : e.clientY);
   };
 
   const troughClickHandler = e => {
     // Check target to ignore handle clicks.
     if (e.target === barRef.current) {
-      // Calculate the offset that would position the *center* of the 
-      // handle at the clicked point (within boundaries).
-      const bcr = barRef.current.getBoundingClientRect();
-      const relativeCoordinate = (
-        isX ? e.clientX - (bcr.left + 4) : e.clientY - (bcr.top + 4)
-      );
-      const relativeOffset = relativeCoordinate / troughLength;
-      const targetOffset = relativeOffset - (visibleSlice / 2);
-      setOffset(
-        Math.min(1 - visibleSlice, Math.max(0, targetOffset))
-      );
-      // Set the transition class and timeout its removal.
+    positionScrollbar(isX ? e.clientX : e.clientY);
       setJump(true);
       setTimeout(() => {
         setJump(false);
@@ -113,11 +83,11 @@ const Scrollbar = props => {
   // Build handle styles.
   const handleStyle = {};
   if (isX) {
-    handleStyle.width = size;
-    handleStyle.left = offsetPx + 'px';
+    handleStyle.width = handleSize;
+    handleStyle.left = offsetSize + 'px';
   } else {
-    handleStyle.height = size;
-    handleStyle.top = offsetPx + 'px';
+    handleStyle.height = handleSize;
+    handleStyle.top = offsetSize + 'px';
   }
 
   // Build handle classlist.
