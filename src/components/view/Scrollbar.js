@@ -6,6 +6,7 @@ import styles from './Scrollbar.module.scss';
 const Scrollbar = props => {
 
   const barRef = useRef();
+  const [barHash, setBarHash] = useState(''); // View hash in use.
   const [viewLength, setViewLength] = useState(0);
   const [lastPos, setLastPos] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -16,10 +17,13 @@ const Scrollbar = props => {
   const isX = axis === 'x'; // Convenience for direction checks.
 
   // Extract the relevant state.
-  const view = useSelector((state) => {
+  const {viewHash, view} = useSelector((state) => {
     const id = state.spreadsheet.selected;
     const view = state.spreadsheet.sheets[id].view;
-    return (isX ? view.cols : view.rows);
+    return {
+      viewHash: view.hash,
+      view: (isX ? view.cols : view.rows),
+    };
   });
   const dispatch = useDispatch();
 
@@ -40,15 +44,25 @@ const Scrollbar = props => {
     return _ => window.removeEventListener('resize', calculateSize);
   }, [isX, barRef]);
 
+  // Effect to reset the scrollbar when the view changes.
+  useEffect(() => {
+    if (barHash !== viewHash) {
+      setBarHash(viewHash);
+      setOffset(view.boundaries[view.start]);
+    }
+  }, [viewHash, barHash, view.boundaries, view.start, troughLength]);
+
   // Effect to set the view starting point according to offset changes.
   useEffect(() => {
+    if (barHash != viewHash) // Don't run if the bar has to reset.
+      return;
     let start = 0;
     while (offset > view.boundaries[start])
       start++;
     const payload = { [isX? 'col' : 'row']: start };
     //checkOffset(offset);
     dispatch(spreadsheetActions.setViewStart(payload));
-  }, [offset, isX, view.boundaries, dispatch]);
+  }, [offset, isX, view.boundaries, dispatch, barHash, viewHash]);
 
   // Event handlers.
 

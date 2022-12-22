@@ -67,6 +67,8 @@ export function nameToCol(name) {
 // Boundaries are the fractions of the total width/height where the row or
 // column starts (eg: 0.5 = col starts at the middle of the total w).
 // Height and width are the total in pixel.
+// Hash is meant to provide a way for components to easily see when a new
+// view should be rendered (because it's recalculated or the sheet changes).
 export function calculateView(cells) {
   // Extract all widths/heights.
   const colWidths = cells[0].map(c => c.width);
@@ -86,6 +88,7 @@ export function calculateView(cells) {
   }, 0);
 
   return {
+    hash: '' + Math.random(),
     rows: {
       sizes: rowHeights,
       total: height,
