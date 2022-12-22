@@ -35,7 +35,7 @@ export function Sheet(name, sheetRows, sheetCols) {
   }
 
   sheet.view = calculateView(sheet.cells);
-  
+
   return sheet;
 }
 
@@ -99,4 +99,15 @@ export function calculateView(cells) {
       start: 0,
     },
   };
+}
+
+// Returns the end of the visible range of row/cols, starting from start,
+// according to the available space and row/col sizes.
+export function visibleRange(space, {start, sizes}) {
+  let lastBlock = start;
+  let totalSpace = sizes[start];
+  while (totalSpace <= space && lastBlock < sizes.length - 1) {
+    totalSpace += sizes[++lastBlock];
+  }
+  return lastBlock;
 }
