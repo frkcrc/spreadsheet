@@ -54,15 +54,17 @@ const Scrollbar = props => {
 
   // Effect to set the view starting point according to offset changes.
   useEffect(() => {
-    if (barHash != viewHash) // Don't run if the bar has to reset.
+    if (barHash !== viewHash) // Don't run if the bar has to reset.
       return;
     let start = 0;
     while (offset > view.boundaries[start])
       start++;
-    const payload = { [isX? 'col' : 'row']: start };
-    //checkOffset(offset);
-    dispatch(spreadsheetActions.setViewStart(payload));
-  }, [offset, isX, view.boundaries, dispatch, barHash, viewHash]);
+    if (view.start !== start) {
+      const payload = { [isX? 'col' : 'row']: start };
+      dispatch(spreadsheetActions.setViewStart(payload));
+    }
+    
+  }, [offset, isX, view.boundaries, view.start, dispatch, barHash, viewHash]);
 
   // Event handlers.
 
