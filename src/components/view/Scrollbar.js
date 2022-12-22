@@ -18,7 +18,10 @@ const Scrollbar = props => {
   const {total, offset} = useSelector((state) => {
     const id = state.spreadsheet.selected;
     const view = state.spreadsheet.sheets[id].view;
-    return (isX ? view.cols : view.rows);
+    return {
+      total: (isX ? view.cols : view.rows).total,
+      offset: view.offsets[axis],
+    };
   });
   const dispatch = useDispatch();
 
