@@ -16,14 +16,11 @@ const Scrollbar = props => {
   const isX = axis === 'x'; // Convenience for direction checks.
 
   // Extract the relevant state.
-  const {total, offset} = useSelector((state) => {
-    const id = state.spreadsheet.selected;
-    const view = state.spreadsheet.sheets[id].view;
-    return {
-      total: (isX ? view.cols : view.rows).total,
-      offset: view.offsets[axis],
-    };
-  });
+  const id = useSelector(state => state.spreadsheet.selected);
+  const total = useSelector(state => 
+    state.spreadsheet.sheets[id].view[isX ? 'cols':'rows'].total);
+  const offset = useSelector(state => 
+    state.spreadsheet.sheets[id].view.offsets[axis]);
   const dispatch = useDispatch();
 
   // Calculate derived properties.

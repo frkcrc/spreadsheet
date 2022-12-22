@@ -27,13 +27,10 @@ const SheetView = () => {
   }, []);
 
   // Extract the relevant state.
-  const { cells, rows, cols } = useSelector((state) => {
-    const id = state.spreadsheet.selected;
-    const cells = state.spreadsheet.sheets[id].cells;
-    const rows = state.spreadsheet.sheets[id].view.rows;
-    const cols = state.spreadsheet.sheets[id].view.cols;
-    return { cells, rows, cols };
-  });
+  const id = useSelector(state => state.spreadsheet.selected);
+  const cells = useSelector(state => state.spreadsheet.sheets[id].cells);
+  const rows = useSelector(state => state.spreadsheet.sheets[id].view.rows);
+  const cols = useSelector(state => state.spreadsheet.sheets[id].view.cols);
 
   // Define the visible range to display in the view.
   const range = {
