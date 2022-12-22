@@ -6,8 +6,25 @@ import Spacer from '../utils/Spacer';
 import styles from './SheetView.module.scss';
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
 import { CellData, colToName } from '../../helpers/sheet';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 const SheetView = () => {
+
+  const viewRef = useRef();
+  const [viewSize, setViewSize] = useState();
+
+  // Effect to set the size responsively.
+  useLayoutEffect(() => {
+    const calculateSize = () => {
+      setViewSize({
+        width: viewRef.current.clientWidth,
+        height: viewRef.current.clientHeight,
+      });
+    };
+    calculateSize();
+    window.addEventListener('resize', calculateSize);
+    return _ => window.removeEventListener('resize', calculateSize);
+  }, []);
 
   // Extract the relevant state.
   const { cells, view } = useSelector((state) => {
@@ -40,7 +57,7 @@ const SheetView = () => {
           {rowHeads.map((r, i) => <Cell head cell={r} key={i} />)}
         </div>
 
-        <div className={styles.view}>
+        <div className={styles.view} ref={viewRef}>
           {cells.map((row, r) => 
             <div className={styles.row} key={r}>
               {row.map((cell, c) => 
