@@ -34,10 +34,10 @@ export function Sheet(name, sheetRows, sheetCols) {
     }
   }
 
-  sheet.startRow = 0;
-  sheet.startCol = 0;
+  sheet.view = calculateView(sheet.cells)
 
-  Object.assign(sheet, calculateView(sheet.cells));
+  sheet.view.startRow = 0;
+  sheet.view.startCol = 0;
 
   return sheet;
 }
