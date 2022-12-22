@@ -6,6 +6,9 @@ const Spacer = props => {
     width: props.width,
     height: props.height,
   };
+  if (props.nb) { // nb = no bottom border
+    style.borderBottom = 'none';
+  }
 
   return (
     <div

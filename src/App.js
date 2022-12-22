@@ -29,9 +29,9 @@ function App() {
         </div>
 
         <div className={styles.lowerContent}>
-          <Spacer width={rowHeadWidth} height={scrollbarThickness} />
+          <Spacer width={rowHeadWidth} height={scrollbarThickness} nb />
           <Scrollbar axis="x" view={0.2} />
-          <Spacer width={scrollbarThickness} height={defaultHeight} />
+          <Spacer width={scrollbarThickness} height={defaultHeight} nb />
         </div>
         
       </div>
