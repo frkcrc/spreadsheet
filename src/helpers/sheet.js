@@ -34,11 +34,8 @@ export function Sheet(name, sheetRows, sheetCols) {
     }
   }
 
-  sheet.view = calculateView(sheet.cells)
-
-  sheet.view.startRow = 0;
-  sheet.view.startCol = 0;
-
+  sheet.view = calculateView(sheet.cells);
+  
   return sheet;
 }
 
@@ -89,9 +86,17 @@ export function calculateView(cells) {
   }, 0);
 
   return {
-    boundariesCols,
-    boundariesRows,
-    width,
-    height
+    rows: {
+      sizes: rowHeights,
+      total: height,
+      boundaries: boundariesRows,
+      start: 0,
+    },
+    cols: {
+      sizes: colWidths,
+      total: width,
+      boundaries: boundariesCols,
+      start: 0,
+    },
   };
 }
