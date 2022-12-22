@@ -6,7 +6,7 @@ const SheetBar = () => {
 
   const dispatch = useDispatch();
 
-  const spreadsheet = useSelector((state) => state.spreadsheet.current);
+  const spreadsheet = useSelector((state) => state.spreadsheet);
   const selected = spreadsheet.selected;
 
   const selectSheet = (i) => {

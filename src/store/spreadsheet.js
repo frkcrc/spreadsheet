@@ -6,21 +6,15 @@ const spreadsheetSlice = createSlice({
   name: 'spreadsheet',
 
   initialState: {
-    current: {
-      // file info...
-      sheets: [
-        new Sheet('Sheet 1'),
-        new Sheet('Sheet 2'),
-        new Sheet('Sheet 3')
-      ],
-      selected: 0,
-    },
-    // history...
+    selected: 0,
+    sheets: [
+      new Sheet('Sheet 1')
+    ],
   },
 
   reducers: {
     selectSheet: (state, action) => {
-      state.current.selected = action.payload;
+      state.selected = action.payload;
     }
   }
 });

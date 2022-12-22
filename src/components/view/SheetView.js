@@ -9,7 +9,7 @@ import { CellData, colToName } from '../../helpers/sheet';
 
 const SheetView = props => {
 
-  const spreadsheet = useSelector((state) => state.spreadsheet.current);
+  const spreadsheet = useSelector((state) => state.spreadsheet);
   const selected = spreadsheet.selected;
   const sheet = spreadsheet.sheets[selected].cells;
 
