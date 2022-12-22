@@ -23,14 +23,14 @@ function App() {
 
           <div className={styles.vBar}>
             <Spacer width={scrollbarThickness} height={defaultHeight} />
-            <Scrollbar axis="y" view={0.5} />
+            <Scrollbar axis="y" />
           </div>
 
         </div>
 
         <div className={styles.lowerContent}>
           <Spacer width={rowHeadWidth} height={scrollbarThickness} nb />
-          <Scrollbar axis="x" view={0.2} />
+          <Scrollbar axis="x" />
           <Spacer width={scrollbarThickness} height={defaultHeight} nb />
         </div>
         

@@ -1,24 +1,46 @@
 import { useState, useRef, useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './Scrollbar.module.scss';
 
 const Scrollbar = props => {
 
-  const scrollbarRef = useRef();
-  const [troughLength, setTroughLength] = useState(0);
+  const barRef = useRef();
+  const [viewLength, setViewLength] = useState(0);
   const [lastPos, setLastPos] = useState(0);
   const [offset, setOffset] = useState(0);
   const [pointerId, setPointerId] = useState(undefined);
   const [jump, setJump] = useState(false);
 
-  const {axis, view} = props;
+  const {axis} = props;
+  const isX = axis === 'x'; // Convenience for direction checks.
 
-  // Calculate dimensions and style the handler.
-  // The view prop is the fraction of the sheet that can be shown at once;
-  // the handle of the scrollbar will the same fraction of the length.
-  const size = (view >= 1 ? 0 : troughLength * view);
+  // Effect to set the size responsively.
+  useLayoutEffect(() => {
+    const calculateSize = () => {
+      const bar = barRef.current;
+      setViewLength(isX ? bar.clientWidth : bar.clientHeight);
+    };
+    calculateSize();
+    window.addEventListener('resize', calculateSize);
+    return _ => window.removeEventListener('resize', calculateSize);
+  }, [isX, barRef]);
+
+  // Extract the relevant state.
+  const view = useSelector((state) => {
+    const id = state.spreadsheet.selected;
+    const view = state.spreadsheet.sheets[id].view;
+    return (isX ? view.cols : view.rows);
+  });
+
+  // Calculate derived properties.
+  const troughLength = viewLength - 8; // View - padding.
+  const visibleSlice = viewLength / view.total; // Visible piece of sheet.
+  const size = visibleSlice >= 1 ? 0 : (troughLength * visibleSlice);
   const offsetPx = offset * troughLength;
+
+  // Build styles.
   const handleStyle = {};
-  if (axis === 'x') {
+  if (isX) {
     handleStyle.width = size;
     handleStyle.left = offsetPx + 'px';
   } else {
@@ -28,73 +50,44 @@ const Scrollbar = props => {
 
   // Build classes for the handle.
   const handleClasses = [styles.handle];
-  if (jump) { // Transition class, only active on click.
+  if (jump) { // Transition CSS class, only active on click.
     handleClasses.push(styles.jump);
   }
 
-  // Effect to update the length on render and on resize.
-  // When the window is resized, the troughLength is recalculated and
-  // everything else adapts as the component gets re-rendered.
-  useLayoutEffect(() => {
-    const calculate = () => {
-      // The subtracted values are the padding.
-      if (axis === 'x') {
-        setTroughLength(scrollbarRef.current.clientWidth - 8);
-      } else {
-        setTroughLength(scrollbarRef.current.clientHeight - 8);
-      }
-    };
-    calculate();
-    window.addEventListener('resize', calculate);
-    return _ => window.removeEventListener('resize', calculate);
-  }, [axis, scrollbarRef]);
-
-  const startDraggingHandler = event => {
-    setPointerId(event.pointerId);
-    setLastPos(
-      (axis === 'x' ? event.clientX : event.clientY)
-    );
-    event.target.setPointerCapture(event.pointerId);
+  const startDraggingHandler = e => {
+    setPointerId(e.pointerId);
+    setLastPos(isX ? e.clientX : e.clientY);
+    e.target.setPointerCapture(e.pointerId);
   };
 
-  const stopDraggingHandler = event => {
-    event.target.releasePointerCapture(pointerId);
+  const stopDraggingHandler = e => {
+    e.target.releasePointerCapture(pointerId);
     setPointerId(undefined);
   };
 
-  const draggingHandler = event => {
+  const draggingHandler = e => {
     if (!pointerId) return;
-    const currentPos = 
-      (axis === 'x' ? event.clientX : event.clientY);
-    const maxOffset = 1 - view;
+    const currentPos = (isX ? e.clientX : e.clientY);
+    const maxOffset = 1 - visibleSlice;
     const delta = (currentPos - lastPos) / troughLength;
-    setOffset((oldOffset) => {
-      const newOffset = oldOffset+delta;
-      return Math.min(maxOffset, Math.max(0, newOffset));
-    });
+    setOffset((old) => Math.min(maxOffset, Math.max(0, old + delta)));
     setLastPos(currentPos);
-    // TODO: Add callback to notify the view when the user scrolls.
   };
 
-  const troughClickHandler = event => {
+  const troughClickHandler = e => {
     // Check target to ignore handle clicks.
-    if (event.target === scrollbarRef.current) {
+    if (e.target === barRef.current) {
       // Calculate the offset that would position the *center* of the 
       // handle at the clicked point (within boundaries).
-      const bcr = scrollbarRef.current.getBoundingClientRect();
-      if (axis === 'x') {
-        const relativeX = event.clientX - (bcr.left + 4);
-        const relativeOffset = relativeX / troughLength;
-        const targetOffset = relativeOffset - (view / 2);
-        const newOffset = Math.min(1 - view, Math.max(0, targetOffset));
-        setOffset(newOffset);
-      } else {
-        const relativeY = event.clientY - (bcr.top + 4);
-        const relativeOffset = relativeY / troughLength;
-        const targetOffset = relativeOffset - (view / 2);
-        const newOffset = Math.min(1 - view, Math.max(0, targetOffset));
-        setOffset(newOffset);
-      }
+      const bcr = barRef.current.getBoundingClientRect();
+      const relativeCoordinate = (
+        isX ? e.clientX - (bcr.left + 4) : e.clientY - (bcr.top + 4)
+      );
+      const relativeOffset = relativeCoordinate / troughLength;
+      const targetOffset = relativeOffset - (visibleSlice / 2);
+      setOffset(
+        Math.min(1 - visibleSlice, Math.max(0, targetOffset))
+      );
       // Set the transition class and timeout its removal.
       setJump(true);
       setTimeout(() => {
@@ -106,7 +99,7 @@ const Scrollbar = props => {
   return (
     <div
       className={styles[axis]}
-      ref={scrollbarRef}
+      ref={barRef}
       onClick={troughClickHandler}
     >
       <div
