@@ -8,6 +8,7 @@ const Scrollbar = props => {
   const barRef = useRef();
   const [viewSize, setViewSize] = useState(0);
   const [barAnchor, setBarAnchor] = useState(0);
+  const [handleAnchor, setHandleAnchor] = useState(0);
   const [pointerId, setPointerId] = useState(undefined);
   const [jump, setJump] = useState(false);
 
@@ -47,9 +48,9 @@ const Scrollbar = props => {
   }, [isX, barRef]);
 
   // Positions the bar at the given position (ie the mouse pointer).
-  const positionScrollbar = position => {
+  const positionScrollbar = (position, anchor) => {
     const onBarPos = position - barAnchor;
-    const targetOffset = onBarPos - handleSize/2;
+    const targetOffset = onBarPos - anchor;
     const fixedOffset = 
       Math.min(offsetMaxSize, Math.max(0, targetOffset));
     dispatch(spreadsheetActions.setOffset({[axis]: fixedOffset * ratio}));
@@ -58,6 +59,10 @@ const Scrollbar = props => {
   // Event handlers.
 
   const startDraggingHandler = e => {
+    // Find the position of the mouse on the handle.
+    const positionOnHandle = 
+      (isX ? e.clientX : e.clientY) - (barAnchor + offsetSize);
+    setHandleAnchor(positionOnHandle);
     setPointerId(e.pointerId);
     e.target.setPointerCapture(e.pointerId);
   };
@@ -69,17 +74,17 @@ const Scrollbar = props => {
 
   const draggingHandler = e => {
     if (!pointerId) return;
-    positionScrollbar(isX ? e.clientX : e.clientY);
+    positionScrollbar(isX ? e.clientX : e.clientY, handleAnchor);
   };
 
   const troughClickHandler = e => {
     // Check target to ignore handle clicks.
     if (e.target === barRef.current) {
-    positionScrollbar(isX ? e.clientX : e.clientY);
-      setJump(true);
-      setTimeout(() => {
-        setJump(false);
-      }, 200);
+    positionScrollbar(isX ? e.clientX : e.clientY, handleSize/2);
+    setJump(true);
+    setTimeout(() => {
+      setJump(false);
+    }, 200);
     }
   };
 
