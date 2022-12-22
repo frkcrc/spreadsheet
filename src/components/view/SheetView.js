@@ -7,16 +7,21 @@ import styles from './SheetView.module.scss';
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
 import { CellData, colToName } from '../../helpers/sheet';
 
-const SheetView = props => {
+const SheetView = () => {
 
-  const spreadsheet = useSelector((state) => state.spreadsheet);
-  const selected = spreadsheet.selected;
-  const sheet = spreadsheet.sheets[selected].cells;
+  // Extract the relevant state.
+  const { cells, view } = useSelector((state) => {
+    const id = state.spreadsheet.selected;
+    const cells = state.spreadsheet.sheets[id].cells;
+    const view = state.spreadsheet.sheets[id].view;
+    return { cells, view };
+  });
 
-  const colHeads = sheet[0].map((_, i) => 
+  // Build the view.
+  const colHeads = cells[0].map((_, i) => 
     new CellData({content: colToName(i)})
   );
-  const rowHeads = sheet.map((_, i) => 
+  const rowHeads = cells.map((_, i) => 
     new CellData({content: `${i+1}`, width: rowHeadWidth})
   );
 
@@ -36,7 +41,7 @@ const SheetView = props => {
         </div>
 
         <div className={styles.view}>
-          {sheet.map((row, r) => 
+          {cells.map((row, r) => 
             <div className={styles.row} key={r}>
               {row.map((cell, c) => 
                 <Cell key={c} cell={cell} />
