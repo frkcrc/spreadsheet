@@ -1,5 +1,6 @@
-import { useState, useRef, useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './Scrollbar.module.scss';
 
 const Scrollbar = props => {
@@ -14,6 +15,20 @@ const Scrollbar = props => {
   const {axis} = props;
   const isX = axis === 'x'; // Convenience for direction checks.
 
+  // Extract the relevant state.
+  const view = useSelector((state) => {
+    const id = state.spreadsheet.selected;
+    const view = state.spreadsheet.sheets[id].view;
+    return (isX ? view.cols : view.rows);
+  });
+  const dispatch = useDispatch();
+
+  // Calculate derived properties.
+  const troughLength = viewLength - 8; // View - padding.
+  const visibleSlice = viewLength / view.total; // Visible piece of sheet.
+  const size = visibleSlice >= 1 ? 0 : (troughLength * visibleSlice);
+  const offsetPx = offset * troughLength;
+
   // Effect to set the size responsively.
   useLayoutEffect(() => {
     const calculateSize = () => {
@@ -25,34 +40,17 @@ const Scrollbar = props => {
     return _ => window.removeEventListener('resize', calculateSize);
   }, [isX, barRef]);
 
-  // Extract the relevant state.
-  const view = useSelector((state) => {
-    const id = state.spreadsheet.selected;
-    const view = state.spreadsheet.sheets[id].view;
-    return (isX ? view.cols : view.rows);
-  });
+  // Effect to set the view starting point according to offset changes.
+  useEffect(() => {
+    let start = 0;
+    while (offset > view.boundaries[start])
+      start++;
+    const payload = { [isX? 'col' : 'row']: start };
+    //checkOffset(offset);
+    dispatch(spreadsheetActions.setViewStart(payload));
+  }, [offset, isX, view.boundaries, dispatch]);
 
-  // Calculate derived properties.
-  const troughLength = viewLength - 8; // View - padding.
-  const visibleSlice = viewLength / view.total; // Visible piece of sheet.
-  const size = visibleSlice >= 1 ? 0 : (troughLength * visibleSlice);
-  const offsetPx = offset * troughLength;
-
-  // Build styles.
-  const handleStyle = {};
-  if (isX) {
-    handleStyle.width = size;
-    handleStyle.left = offsetPx + 'px';
-  } else {
-    handleStyle.height = size;
-    handleStyle.top = offsetPx + 'px';
-  }
-
-  // Build classes for the handle.
-  const handleClasses = [styles.handle];
-  if (jump) { // Transition CSS class, only active on click.
-    handleClasses.push(styles.jump);
-  }
+  // Event handlers.
 
   const startDraggingHandler = e => {
     setPointerId(e.pointerId);
@@ -95,6 +93,22 @@ const Scrollbar = props => {
       }, 200);
     }
   };
+
+  // Build handle styles.
+  const handleStyle = {};
+  if (isX) {
+    handleStyle.width = size;
+    handleStyle.left = offsetPx + 'px';
+  } else {
+    handleStyle.height = size;
+    handleStyle.top = offsetPx + 'px';
+  }
+
+  // Build handle classlist.
+  const handleClasses = [styles.handle];
+  if (jump) { // Transition CSS class, only active on click.
+    handleClasses.push(styles.jump);
+  }
 
   return (
     <div

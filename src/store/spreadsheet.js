@@ -15,6 +15,15 @@ const spreadsheetSlice = createSlice({
   reducers: {
     selectSheet: (state, action) => {
       state.selected = action.payload;
+    },
+    setViewStart: (state, action) => {
+      const id = state.selected;
+      if ('row' in action.payload) {
+        state.sheets[id].view.rows.start = action.payload.row;
+      }
+      if ('col' in action.payload) {
+        state.sheets[id].view.cols.start = action.payload.col;
+      }
     }
   }
 });
