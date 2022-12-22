@@ -116,3 +116,18 @@ export function visibleRange(space, {start, sizes}) {
   }
   return lastBlock;
 }
+
+// Changes a sheet view object, fixing the starting points based on the
+// offset values.
+export function offsetsToStarts(view) {
+  for (let i = 0; i < view.rows.boundaries.length; i++) {
+    if (view.rows.boundaries[i] * view.rows.total > view.offsets.y)
+      break;
+    view.rows.start = i;
+  }
+  for (let i = 0; i < view.cols.boundaries.length; i++) {
+    if (view.cols.boundaries[i] * view.cols.total > view.offsets.x)
+      break;
+    view.cols.start = i;
+  }
+}

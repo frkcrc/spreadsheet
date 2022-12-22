@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Sheet } from "../helpers/sheet";
+import { offsetsToStarts, Sheet } from "../helpers/sheet";
 
 const spreadsheetSlice = createSlice({
 
@@ -15,9 +15,11 @@ const spreadsheetSlice = createSlice({
   },
 
   reducers: {
+
     selectSheet: (state, action) => {
       state.selected = action.payload;
     },
+
     setOffset: (state, action) => {
       const id = state.selected;
       if ('x' in action.payload) {
@@ -25,7 +27,9 @@ const spreadsheetSlice = createSlice({
       } else {
         state.sheets[id].view.offsets.y = action.payload.y;
       }
+      offsetsToStarts(state.sheets[id].view);
     },
+    
     setViewStart: (state, action) => {
       const id = state.selected;
       if ('row' in action.payload) {
