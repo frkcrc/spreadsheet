@@ -1,0 +1,44 @@
+@use '../styles/colors.scss';
+@use '../styles/variables.scss';
+
+.sheetArea {
+  flex: 1 1 auto;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // Row: Sheet View + Vertical Scrollbar
+  .middleContent {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+
+    .view {
+      flex: 1 1 auto;
+
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+  
+    .vBar {
+      flex: 0 0 content;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+  }
+
+  // Row: Horizontal Scrollbar
+  .lowerContent {
+    flex: 0 0 auto;
+
+    display: flex;
+  }
+
+
+}

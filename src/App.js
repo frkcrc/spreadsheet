@@ -1,8 +1,5 @@
 import SheetBar from './components/sheetbar/SheetBar';
-import SheetView from './components/view/SheetView';
-import Scrollbar from './components/view/Scrollbar';
-import Spacer from './components/utils/Spacer';
-import { defaultHeight, rowHeadWidth, scrollbarThickness } from './helpers/constants';
+import SheetPane from './components/SheetPane';
 
 import styles from './App.module.scss';
 
@@ -13,28 +10,7 @@ function App() {
         <h1>SPREADSHEET</h1>
       </div>
       
-      <div className={styles.sheetArea}>
-
-        <div className={styles.middleContent}>
-
-          <div className={styles.view}>
-            <SheetView />
-          </div>
-
-          <div className={styles.vBar}>
-            <Spacer width={scrollbarThickness} height={defaultHeight} />
-            <Scrollbar axis="y" />
-          </div>
-
-        </div>
-
-        <div className={styles.lowerContent}>
-          <Spacer width={rowHeadWidth} height={scrollbarThickness} nb />
-          <Scrollbar axis="x" />
-          <Spacer width={scrollbarThickness} height={defaultHeight} nb />
-        </div>
-        
-      </div>
+      <SheetPane />
 
       <SheetBar />
     </div>
