@@ -8,7 +8,9 @@ const spreadsheetSlice = createSlice({
   initialState: {
     selected: 0,
     sheets: [
-      new Sheet('Sheet 1')
+      new Sheet('Sheet 1'),
+      new Sheet('Sheet 2', 10, 5),
+      new Sheet('Sheet 3')
     ],
   },
 
