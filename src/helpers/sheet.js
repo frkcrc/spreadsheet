@@ -87,7 +87,6 @@ export function calculateView(cells) {
   }, 0);
 
   return {
-    hash: '' + Math.random(),
     rows: {
       sizes: rowHeights,
       total: height,
