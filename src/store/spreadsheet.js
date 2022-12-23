@@ -23,10 +23,10 @@ const spreadsheetSlice = createSlice({
 
     setOffset: (state, action) => {
       const id = state.selected;
-      if ('x' in action.payload) {
-        state.sheets[id].view.cols.offset = action.payload.x;
+      if ('cols' in action.payload) {
+        state.sheets[id].view.cols.offset = action.payload.cols;
       } else {
-        state.sheets[id].view.rows.offset = action.payload.y;
+        state.sheets[id].view.rows.offset = action.payload.rows;
       }
       offsetsToStarts(state.sheets[id].view);
     },

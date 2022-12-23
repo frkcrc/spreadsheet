@@ -22,12 +22,12 @@ const SheetPane = () => {
         </div>
         <div className={styles.vBar}>
           <Spacer width={scrollbarThickness} height={defaultHeight} />
-          <Scrollbar axis="y" />
+          <Scrollbar axis="rows" />
         </div>
       </div>
       <div className={styles.lowerContent}>
         <Spacer width={rowHeadWidth} height={scrollbarThickness} nb />
-        <Scrollbar axis="x" />
+        <Scrollbar axis="cols" />
         <Spacer width={scrollbarThickness} height={defaultHeight} nb />
       </div>
     </div>

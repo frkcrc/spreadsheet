@@ -19,7 +19,7 @@ $padding: 4px;
 }
 
 
-.x {
+.cols {
   @extend .scrollbar;
 
   flex: 1 0 auto;
@@ -34,7 +34,7 @@ $padding: 4px;
 
 }
 
-.y {
+.rows {
   @extend .scrollbar;
 
   flex: 1 0 auto;
