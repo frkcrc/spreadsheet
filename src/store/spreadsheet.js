@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Sheet } from "../helpers/sheet";
-import { changeOffset, fixStartingPoints, offsetsToStarts } from "../helpers/view-state";
+import { changeOffset, changePosition } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
 
@@ -29,6 +29,11 @@ const spreadsheetSlice = createSlice({
     addOffset: (state, action) => {
       const { axis, delta } = action.payload;
       changeOffset(state, axis, delta);
+    },
+
+    scroll: (state, action) => {
+      const { axis, delta } = action.payload;
+      changePosition(state, axis, delta);
     },
     
   }
