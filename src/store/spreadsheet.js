@@ -35,26 +35,7 @@ const spreadsheetSlice = createSlice({
       axis.offset = Math.min(maxOffset, Math.max(0, axis.offset));
       offsetsToStarts(state.sheets[id].view);
     },
-
-    setOffset: (state, action) => {
-      const id = state.selected;
-      if ('cols' in action.payload) {
-        state.sheets[id].view.cols.offset = action.payload.cols;
-      } else {
-        state.sheets[id].view.rows.offset = action.payload.rows;
-      }
-      offsetsToStarts(state.sheets[id].view);
-    },
     
-    setViewStart: (state, action) => {
-      const id = state.selected;
-      if ('row' in action.payload) {
-        state.sheets[id].view.rows.start = action.payload.row;
-      }
-      if ('col' in action.payload) {
-        state.sheets[id].view.cols.start = action.payload.col;
-      }
-    }
   }
 });
 
