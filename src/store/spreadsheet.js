@@ -29,8 +29,10 @@ const spreadsheetSlice = createSlice({
     addOffset: (state, action) => {
       const id = state.selected;
       const axis = state.sheets[id].view[action.payload.axis];
-      const delta = action.payload.delta;
-      axis.offset += delta; // BROKEN! Clamp to [0,max] range.
+      const dir =(action.payload.axis === 'rows' ? 'height' : 'width');
+      const maxOffset = axis.total - state.viewport[dir];
+      axis.offset += action.payload.delta;
+      axis.offset = Math.min(maxOffset, Math.max(0, axis.offset));
       offsetsToStarts(state.sheets[id].view);
     },
 
