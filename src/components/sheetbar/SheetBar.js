@@ -9,6 +9,10 @@ const SheetBar = () => {
   const spreadsheet = useSelector((state) => state.spreadsheet);
   const selected = spreadsheet.selected;
 
+  const newSheet = () => {
+    dispatch(spreadsheetActions.newSheet());
+  };
+
   const selectSheet = (i) => {
     if (i === selected)
       return;
@@ -21,7 +25,10 @@ const SheetBar = () => {
   return (
     <div className={styles.sheetBar}>
         <div className={styles.addButton}>
-          <button type="button">+</button>
+          <button
+            type="button"
+            onClick={newSheet}
+          >+</button>
         </div>
         <div className={styles.selectorsContainer}>
           {spreadsheet.sheets.map((s, i) => 

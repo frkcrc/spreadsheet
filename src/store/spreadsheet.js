@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { incrementalSheetName } from "../helpers/constants";
 import { Sheet } from "../helpers/sheet";
 import { changeOffset, changePosition } from "../helpers/view-state";
 
@@ -10,10 +11,11 @@ const spreadsheetSlice = createSlice({
     selected: 0,
     sheets: [
       new Sheet('Sheet 1'),
-      new Sheet('Sheet 2', 10, 5),
+      new Sheet('Sheet 2'),
       new Sheet('Sheet 3')
     ],
     viewport: { width: 0, height: 0 },
+    nextId: 4,
   },
 
   reducers: {
@@ -24,6 +26,14 @@ const spreadsheetSlice = createSlice({
 
     selectSheet: (state, action) => {
       state.selected = action.payload;
+    },
+
+    newSheet: (state) => {
+      const id = state.nextId++;
+      state.sheets.push(
+        new Sheet(incrementalSheetName.replace('#', id))
+      );
+      state.selected = state.sheets.length - 1;
     },
 
     addOffset: (state, action) => {
