@@ -70,18 +70,18 @@ const Scrollbar = props => {
   };
 
   const draggingHandler = e => {
-    if (!pointerId) return;
+    if (pointerId === undefined) return;
     positionScrollbar(isX ? e.clientX : e.clientY, handleAnchor);
   };
 
   const troughClickHandler = e => {
     // Check target to ignore handle clicks.
     if (e.target === barRef.current) {
-    positionScrollbar(isX ? e.clientX : e.clientY, handleSize/2);
-    setJump(true);
-    setTimeout(() => {
-      setJump(false);
-    }, 200);
+      positionScrollbar(isX ? e.clientX : e.clientY, handleSize/2);
+      setJump(true);
+      setTimeout(() => {
+        setJump(false);
+      }, 200);
     }
   };
 
