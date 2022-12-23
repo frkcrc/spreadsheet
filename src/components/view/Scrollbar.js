@@ -6,7 +6,6 @@ import styles from './Scrollbar.module.scss';
 const Scrollbar = props => {
 
   const barRef = useRef();
-  const [viewSize, setViewSize] = useState(0);
   const [barAnchor, setBarAnchor] = useState(0);
   const [handleAnchor, setHandleAnchor] = useState(0);
   const [pointerId, setPointerId] = useState(undefined);
@@ -21,6 +20,8 @@ const Scrollbar = props => {
     state.spreadsheet.sheets[id].view[axis].total);
   const offset = useSelector(state => 
     state.spreadsheet.sheets[id].view[axis].offset);
+  const viewSize = useSelector(state => 
+    state.spreadsheet.viewport[isX ? 'width' : 'height']);
   const dispatch = useDispatch();
 
   // Calculate derived properties.
@@ -33,9 +34,7 @@ const Scrollbar = props => {
   // Effect to set the size responsively.
   useLayoutEffect(() => {
     const calculate = () => {
-      const bar = barRef.current;
-      setViewSize(isX ? bar.clientWidth : bar.clientHeight);
-      const bcr = bar.getBoundingClientRect();
+      const bcr = barRef.current.getBoundingClientRect();
       setBarAnchor(isX ? (bcr.left + 4) : (bcr.top + 4));
     };
     calculate();
