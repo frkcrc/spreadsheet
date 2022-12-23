@@ -29,11 +29,12 @@ const SheetView = () => {
   }, [dispatch]);
 
   // Extract the relevant state.
-  const id = useSelector(state => state.spreadsheet.selected);
-  const cells = useSelector(state => state.spreadsheet.sheets[id].cells);
-  const rows = useSelector(state => state.spreadsheet.sheets[id].view.rows);
-  const cols = useSelector(state => state.spreadsheet.sheets[id].view.cols);
   const viewSize = useSelector(state => state.spreadsheet.viewport);
+  const sheet = useSelector(state => 
+    state.spreadsheet.sheets[state.spreadsheet.selected]);
+  const {cells, view} = sheet;
+  const {rows, cols} = view;
+
 
   // Define the visible range to display in the view.
   const range = {
