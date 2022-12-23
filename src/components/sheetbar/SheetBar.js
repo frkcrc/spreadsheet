@@ -4,10 +4,9 @@ import styles from './SheetBar.module.scss';
 
 const SheetBar = () => {
 
+  const selected = useSelector((state) => state.spreadsheet.selected);
+  const sheets = useSelector((state) => state.spreadsheet.sheets);
   const dispatch = useDispatch();
-
-  const spreadsheet = useSelector((state) => state.spreadsheet);
-  const selected = spreadsheet.selected;
 
   const newSheet = () => {
     dispatch(spreadsheetActions.newSheet());
@@ -31,7 +30,7 @@ const SheetBar = () => {
           >+</button>
         </div>
         <div className={styles.selectorsContainer}>
-          {spreadsheet.sheets.map((s, i) => 
+          {sheets.map((s, i) => 
             <div
               className={getClass(i)}
               onClick={() => selectSheet(i)}
