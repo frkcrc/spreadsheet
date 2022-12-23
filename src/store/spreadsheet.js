@@ -28,6 +28,10 @@ const spreadsheetSlice = createSlice({
       state.selected = action.payload;
     },
 
+    selectCell: (state, action) => {
+      state.sheets[state.selected].view.selectedCell = action.payload;
+    },
+
     newSheet: (state) => {
       const id = state.nextId++;
       state.sheets.push(

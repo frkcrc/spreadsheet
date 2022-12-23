@@ -6,9 +6,8 @@ const Cell = props => {
 
   // Build classes for the cell.
   const classes = [styles.cell];
-  if (props.head) {
-    classes.push(styles.head);
-  }
+  if (props.head) { classes.push(styles.head); }
+  if (props.selected) { classes.push(styles.selected); }
 
   const style = {
     width: cell.width,
@@ -19,6 +18,7 @@ const Cell = props => {
     <div
       className={classes.join(' ')}
       style={style}
+      onClick={() => props.onCellClick(cell)}
     >{cell.content}</div>
   );
 };

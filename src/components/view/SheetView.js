@@ -6,7 +6,7 @@ import styles from './SheetView.module.scss';
 
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
 import { CellData } from '../../helpers/sheet';
-import { colToName, visibleRange } from '../../helpers/view-utils';
+import { colToName, same, visibleRange } from '../../helpers/view-utils';
 import { useLayoutEffect, useRef } from 'react';
 import { spreadsheetActions } from '../../store/spreadsheet';
 
@@ -33,7 +33,7 @@ const SheetView = () => {
   const sheet = useSelector(state => 
     state.spreadsheet.sheets[state.spreadsheet.selected]);
   const {cells, view} = sheet;
-  const {rows, cols} = view;
+  const {rows, cols, selectedCell, multiSelection} = view;
 
   // Define the visible range to display in the view.
   const range = {
@@ -52,6 +52,13 @@ const SheetView = () => {
     range.cols.end = visibleRange(viewSize.width, cols);
     range.rows.end = visibleRange(viewSize.height, rows);
   }
+
+  // Handlers.
+  const onCellClickHandler = cell => {
+    dispatch(spreadsheetActions.selectCell({
+      row: cell.row, col: cell.col
+    }));
+  };
 
   // Build the view in the visible range.
   const colHeads = cells[0]
@@ -75,7 +82,12 @@ const SheetView = () => {
         .slice(range.cols.start, range.cols.end + 1)
         .map((cell, c) => {
           return (
-            <Cell key={c} cell={cell} />
+            <Cell
+              key={c}
+              cell={cell} 
+              selected={same(cell, selectedCell)}
+              onCellClick={onCellClickHandler}
+            />
           );
         });
       // Pack it in a row div.
