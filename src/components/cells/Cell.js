@@ -18,7 +18,9 @@ const Cell = props => {
     <div
       className={classes.join(' ')}
       style={style}
-      onClick={() => props.onCellClick(cell)}
+      onPointerDown={() => props.pointerDown?.(cell)}
+      onPointerEnter={() => props.pointerEnter?.(cell)}
+      onPointerUp={() => props.pointerUp?.(cell)}
     >{cell.content}</div>
   );
 };

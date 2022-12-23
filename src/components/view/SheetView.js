@@ -6,13 +6,14 @@ import styles from './SheetView.module.scss';
 
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
 import { CellData } from '../../helpers/sheet';
-import { colToName, same, visibleRange } from '../../helpers/view-utils';
-import { useLayoutEffect, useRef } from 'react';
+import { between, colToName, msFix, same, visibleRange } from '../../helpers/view-utils';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { spreadsheetActions } from '../../store/spreadsheet';
 
 const SheetView = () => {
 
   const viewRef = useRef();
+  const [isSelecting, setIsSelecting] = useState(false);
   const dispatch = useDispatch();
 
   // Effect to set the size responsively.
@@ -27,6 +28,28 @@ const SheetView = () => {
     window.addEventListener('resize', calculateSize);
     return _ => window.removeEventListener('resize', calculateSize);
   }, [dispatch]);
+
+  // Handlers.
+  
+  const onPointerDownHandler = cell => {
+    const target = { row: cell.row, col: cell.col }; 
+    dispatch(spreadsheetActions.selectCell(target));
+    dispatch(spreadsheetActions.selectMultiple(msFix(target, target)));
+    setIsSelecting(true);
+  };
+
+  const onPointerEnterHandler = cell => {
+    if (!isSelecting)
+      return;
+    const target = { row: cell.row, col: cell.col }
+    dispatch(spreadsheetActions.selectMultiple(msFix(selectedCell, target)));
+  };
+
+  const onPointerUpHandler = cell => {
+    setIsSelecting(false);
+    const target = { row: cell.row, col: cell.col }
+    dispatch(spreadsheetActions.selectMultiple(msFix(selectedCell, target)));
+  };
 
   // Extract the relevant state.
   const viewSize = useSelector(state => state.spreadsheet.viewport);
@@ -53,13 +76,6 @@ const SheetView = () => {
     range.rows.end = visibleRange(viewSize.height, rows);
   }
 
-  // Handlers.
-  const onCellClickHandler = cell => {
-    dispatch(spreadsheetActions.selectCell({
-      row: cell.row, col: cell.col
-    }));
-  };
-
   // Build the view in the visible range.
   const colHeads = cells[0]
     .slice(range.cols.start, range.cols.end + 1)
@@ -81,12 +97,15 @@ const SheetView = () => {
       const rowCells = row
         .slice(range.cols.start, range.cols.end + 1)
         .map((cell, c) => {
+          const multiselected = between(cell, multiSelection);
           return (
             <Cell
               key={c}
               cell={cell} 
-              selected={same(cell, selectedCell)}
-              onCellClick={onCellClickHandler}
+              selected={same(cell, selectedCell) || multiselected}
+              pointerDown={onPointerDownHandler}
+              pointerEnter={onPointerEnterHandler}
+              pointerUp={onPointerUpHandler}
             />
           );
         });

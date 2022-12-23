@@ -32,6 +32,10 @@ const spreadsheetSlice = createSlice({
       state.sheets[state.selected].view.selectedCell = action.payload;
     },
 
+    selectMultiple: (state, action) => {
+      state.sheets[state.selected].view.multiSelection = action.payload;
+    },
+
     newSheet: (state) => {
       const id = state.nextId++;
       state.sheets.push(

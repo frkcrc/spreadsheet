@@ -39,3 +39,26 @@ export function visibleRange(space, {start, sizes}) {
 export function same(x, y) {
   return (x && y && x.row === y.row && x.col === y.col);
 }
+
+// Returns the correct pair of objects for the top-left and bottom-right
+// corner of a multiselection box between the two given cells.
+export function msFix(x, y) {
+  return {
+    start: {
+      row: Math.min(x.row, y.row),
+      col: Math.min(x.col, y.col),
+    },
+    end: {
+      row: Math.max(x.row, y.row),
+      col: Math.max(x.col, y.col),
+    }
+  };
+}
+
+// Checks if a cell is inside the box delimited by the given start/end.
+export function between(x, {start, end}) {
+  if (!x || !start || !end)
+    return false;
+  return (x.row >= start.row && x.row <= end.row &&
+          x.col >= start.col && x.col <= end.col);
+} 
