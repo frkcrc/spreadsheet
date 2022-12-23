@@ -35,7 +35,6 @@ const SheetView = () => {
   const {cells, view} = sheet;
   const {rows, cols} = view;
 
-
   // Define the visible range to display in the view.
   const range = {
     rows: {
@@ -54,8 +53,6 @@ const SheetView = () => {
     range.rows.end = visibleRange(viewSize.height, rows);
   }
 
-  // Build the headings.
-
   // Build the view in the visible range.
   const colHeads = cells[0]
     .slice(range.cols.start, range.cols.end + 1)
@@ -69,6 +66,25 @@ const SheetView = () => {
       content: `${range.rows.start+i+1}`,
       width: rowHeadWidth,
     }));
+  
+  const renderedSheet = cells
+    .slice(range.rows.start, range.rows.end + 1)
+    .map((row, r) => {
+      // Prep the row's cells.
+      const rowCells = row
+        .slice(range.cols.start, range.cols.end + 1)
+        .map((cell, c) => {
+          return (
+            <Cell key={c} cell={cell} />
+          );
+        });
+      // Pack it in a row div.
+      return (
+        <div className={styles.row} key={r}>
+          {rowCells}
+        </div>
+      );
+    });
 
   return (
     <>
@@ -86,17 +102,7 @@ const SheetView = () => {
         </div>
 
         <div className={styles.view} ref={viewRef}>
-          {cells
-            .slice(range.rows.start, range.rows.end + 1)
-            .map((row, r) => 
-              <div className={styles.row} key={r}>
-                {row
-                  .slice(range.cols.start, range.cols.end + 1)
-                  .map((cell, c) => 
-                    <Cell key={c} cell={cell} />
-                  )}
-              </div>
-            )}
+          {renderedSheet}
         </div>
       </div>
     </>
