@@ -25,3 +25,14 @@
   background-color: colors.$base-gray;
   color: colors.$text-labels;
 }
+
+.selected {
+  border: 2px solid colors.$selection-outline;
+}
+
+.mulSelection {
+  &Top { border-top: 1px solid colors.$selection-outline; }
+  &Bottom { border-bottom: 1px solid colors.$selection-outline; }
+  &Left { border-left: 1px solid colors.$selection-outline; }
+  &Right { border-right: 1px solid colors.$selection-outline; }
+}
