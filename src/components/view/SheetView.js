@@ -1,37 +1,39 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Cell from '../cells/Cell';
 import Spacer from '../utils/Spacer';
-
 import styles from './SheetView.module.scss';
+
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
 import { CellData } from '../../helpers/sheet';
 import { colToName, visibleRange } from '../../helpers/view-utils';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+import { spreadsheetActions } from '../../store/spreadsheet';
 
 const SheetView = () => {
 
   const viewRef = useRef();
-  const [viewSize, setViewSize] = useState();
+  const dispatch = useDispatch();
 
   // Effect to set the size responsively.
   useLayoutEffect(() => {
     const calculateSize = () => {
-      setViewSize({
+      dispatch(spreadsheetActions.setViewport({
         width: viewRef.current.clientWidth,
         height: viewRef.current.clientHeight,
-      });
+      }));
     };
     calculateSize();
     window.addEventListener('resize', calculateSize);
     return _ => window.removeEventListener('resize', calculateSize);
-  }, []);
+  }, [dispatch]);
 
   // Extract the relevant state.
   const id = useSelector(state => state.spreadsheet.selected);
   const cells = useSelector(state => state.spreadsheet.sheets[id].cells);
   const rows = useSelector(state => state.spreadsheet.sheets[id].view.rows);
   const cols = useSelector(state => state.spreadsheet.sheets[id].view.cols);
+  const viewSize = useSelector(state => state.spreadsheet.viewport);
 
   // Define the visible range to display in the view.
   const range = {

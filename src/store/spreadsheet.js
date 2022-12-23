@@ -13,9 +13,14 @@ const spreadsheetSlice = createSlice({
       new Sheet('Sheet 2', 10, 5),
       new Sheet('Sheet 3')
     ],
+    viewport: { width: 0, height: 0 },
   },
 
   reducers: {
+
+    setViewport: (state, action) => {
+      state.viewport = action.payload;
+    },
 
     selectSheet: (state, action) => {
       state.selected = action.payload;
