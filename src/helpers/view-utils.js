@@ -34,3 +34,8 @@ export function visibleRange(space, {start, sizes}) {
   }
   return lastBlock;
 }
+
+// Checks if the two objects have the same row/col properties.
+export function same(cell1, cell2) {
+  return (cell1.row === cell2.row && cell1.col === cell2.col);
+}
