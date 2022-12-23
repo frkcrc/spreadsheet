@@ -21,6 +21,14 @@ const spreadsheetSlice = createSlice({
       state.selected = action.payload;
     },
 
+    addOffset: (state, action) => {
+      const id = state.selected;
+      const axis = state.sheets[id].view[action.payload.axis];
+      const delta = action.payload.delta;
+      axis.offset += delta; // BROKEN! Clamp to [0,max] range.
+      offsetsToStarts(state.sheets[id].view);
+    },
+
     setOffset: (state, action) => {
       const id = state.selected;
       if ('cols' in action.payload) {

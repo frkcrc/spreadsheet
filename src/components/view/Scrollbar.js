@@ -29,7 +29,6 @@ const Scrollbar = props => {
   const ratio = total / troughLength; // Ratio between doc and bar size.
   const offsetSize = (offset / total) * troughLength;
   const handleSize = visibleSlice >= 1 ? 0 : (troughLength * visibleSlice);
-  const offsetMaxSize = troughLength - handleSize;
 
   // Effect to set the size responsively.
   useLayoutEffect(() => {
@@ -44,13 +43,15 @@ const Scrollbar = props => {
     return _ => window.removeEventListener('resize', calculate);
   }, [isX, barRef]);
 
-  // Positions the bar at the given position (ie the mouse pointer).
+  // Positions the bar at the given position.
   const positionScrollbar = (position, anchor) => {
     const onBarPos = position - barAnchor;
     const targetOffset = onBarPos - anchor;
-    const fixedOffset = 
-      Math.min(offsetMaxSize, Math.max(0, targetOffset));
-    dispatch(spreadsheetActions.setOffset({[axis]: fixedOffset * ratio}));
+    const delta = (targetOffset - offsetSize) * ratio;
+    dispatch(spreadsheetActions.addOffset({
+      axis,
+      delta
+    }));
   }
 
   // Event handlers.
