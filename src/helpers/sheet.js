@@ -36,7 +36,11 @@ export function Sheet(name, sheetRows, sheetCols) {
     }
   }
 
-  sheet.view = calculateView(sheet.cells);
+  sheet.view = {
+    selectedCell: null,
+    multiSelection: null,
+    ...calculateView(sheet.cells),
+  };
 
   return sheet;
 }
