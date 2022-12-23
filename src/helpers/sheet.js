@@ -68,16 +68,14 @@ export function calculateView(cells) {
       total: height,
       boundaries: boundariesRows,
       start: 0,
+      offset: 0
     },
     cols: {
       sizes: colWidths,
       total: width,
       boundaries: boundariesCols,
       start: 0,
-    },
-    offsets: {
-      x: 0,
-      y: 0
+      offset: 0
     }
   };
 }

@@ -20,7 +20,7 @@ const Scrollbar = props => {
   const total = useSelector(state => 
     state.spreadsheet.sheets[id].view[isX ? 'cols':'rows'].total);
   const offset = useSelector(state => 
-    state.spreadsheet.sheets[id].view.offsets[axis]);
+    state.spreadsheet.sheets[id].view[isX ? 'cols':'rows'].offset);
   const dispatch = useDispatch();
 
   // Calculate derived properties.
