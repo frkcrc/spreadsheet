@@ -56,9 +56,10 @@ export function msFix(x, y) {
 }
 
 // Checks if a cell is inside the box delimited by the given start/end.
-export function between(x, {start, end}) {
-  if (!x || !start || !end)
+export function between(x, multiSelection) {
+  if (!x || !multiSelection)
     return false;
+  const {start, end} = multiSelection;
   return (x.row >= start.row && x.row <= end.row &&
           x.col >= start.col && x.col <= end.col);
 } 
