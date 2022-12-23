@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Spacer from "./utils/Spacer";
 import Scrollbar from "./view/Scrollbar";
 import SheetView from "./view/SheetView";
@@ -11,7 +11,10 @@ const SheetPane = () => {
 
   const dispatch = useDispatch();
   const onWheelHandler = e => {
-    //dispatch(spreadsheetActions.setOffset());
+    dispatch(spreadsheetActions.scroll({
+      axis: 'rows',
+      delta: (e.deltaY > 0 ? +1 : -1) 
+    }));
   };
 
   return (
