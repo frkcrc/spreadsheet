@@ -14,6 +14,8 @@ export function CellData(params = {}) {
     content: '',
     width: defaultWidth,
     height: defaultHeight,
+    row: 0,
+    col: 0,
     ...params
   };
 }
@@ -30,7 +32,7 @@ export function Sheet(name, sheetRows, sheetCols) {
   for (let i = 0; i < rows; i++) {
     sheet.cells[i] = [];
     for (let j = 0; j < cols; j++) {
-      sheet.cells[i][j] = new CellData();
+      sheet.cells[i][j] = new CellData({row: i, col: j});
     }
   }
 
