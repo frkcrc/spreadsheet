@@ -5,7 +5,8 @@ import Spacer from '../utils/Spacer';
 
 import styles from './SheetView.module.scss';
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
-import { CellData, colToName, visibleRange } from '../../helpers/sheet';
+import { CellData } from '../../helpers/sheet';
+import { colToName, visibleRange } from '../../helpers/view-utils';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 const SheetView = () => {

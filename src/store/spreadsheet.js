@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { offsetsToStarts, Sheet } from "../helpers/sheet";
+import { Sheet } from "../helpers/sheet";
+import { offsetsToStarts } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
 

@@ -39,30 +39,6 @@ export function Sheet(name, sheetRows, sheetCols) {
   return sheet;
 }
 
-// Converts a 0-based column number to a letter-based ID.
-export function colToName(num) {
-  let n = num + 1;
-  let name = '';
-  while (n > 0) {
-    const remainder = (n % 26 || 26); // 0 gets rolled to 26.
-    n = Math.floor((n-1) / 26);
-    name = String.fromCharCode(65 + remainder - 1) + name;
-  }
-  return name;
-}
-
-// Converts a letter-based column ID to a 0-based number.
-export function nameToCol(name) {
-  const letters = name.split('').reverse();
-  let col = -1; // Start from -1 to go 0-based.
-  for (let i = 0; i < letters.length; i++) {
-    const letter = letters[i];
-    const ordinal = letter.charCodeAt(0) - 65 + 1;
-    col += ordinal * (26 ** i);
-  }
-  return col;
-}
-
 // Calculates data to determine the sheet's view.
 // Boundaries are the fractions of the total width/height where the row or
 // column starts (eg: 0.5 = col starts at the middle of the total w).
@@ -104,30 +80,4 @@ export function calculateView(cells) {
       y: 0
     }
   };
-}
-
-// Returns the end of the visible range of row/cols, starting from start,
-// according to the available space and row/col sizes.
-export function visibleRange(space, {start, sizes}) {
-  let lastBlock = start;
-  let totalSpace = sizes[start];
-  while (totalSpace <= space && lastBlock < sizes.length - 1) {
-    totalSpace += sizes[++lastBlock];
-  }
-  return lastBlock;
-}
-
-// Changes a sheet view object, fixing the starting points based on the
-// offset values.
-export function offsetsToStarts(view) {
-  for (let i = 0; i < view.rows.boundaries.length; i++) {
-    if (view.rows.boundaries[i] * view.rows.total > view.offsets.y)
-      break;
-    view.rows.start = i;
-  }
-  for (let i = 0; i < view.cols.boundaries.length; i++) {
-    if (view.cols.boundaries[i] * view.cols.total > view.offsets.x)
-      break;
-    view.cols.start = i;
-  }
 }
