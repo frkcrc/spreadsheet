@@ -40,25 +40,21 @@ export function Sheet(name, sheetRows, sheetCols) {
 }
 
 // Calculates data to determine the sheet's view.
-// Boundaries are the fractions of the total width/height where the row or
-// column starts (eg: 0.5 = col starts at the middle of the total w).
+// Boundaries are the partial sums of width/height.
 // Height and width are the total in pixel.
 // Offset is the offset from the start of the current view, in pixels.
 export function calculateView(cells) {
   // Extract all widths/heights.
   const colWidths = cells[0].map(c => c.width);
   const rowHeights = cells.map(r => r[0].height);
-  // Sum of all widths/heights.
-  const width = colWidths.reduce((x, y) => x+y, 0);
-  const height = rowHeights.reduce((x, y) => x+y, 0);
-  // Partial sums as a fraction of the total.
+  // Sum of all widths/heights, and partial sums.
   const boundariesCols = [], boundariesRows = [];
-  colWidths.reduce((acc, c) => {
-    boundariesCols.push(acc/width);
+  const width = colWidths.reduce((acc, c) => {
+    boundariesCols.push(acc)
     return acc+c;
   }, 0);
-  rowHeights.reduce((acc, r) => {
-    boundariesRows.push(acc/height);
+  const height = rowHeights.reduce((acc, r) => {
+    boundariesRows.push(acc);
     return acc+r;
   }, 0);
 
