@@ -6,7 +6,7 @@ import styles from './SheetView.module.scss';
 
 import { defaultHeight, rowHeadWidth } from '../../helpers/constants';
 import { CellData } from '../../helpers/sheet';
-import { between, colToName, msFix, same, visibleRange } from '../../helpers/view-utils';
+import { between, colToName, msBorders, msFix, same, visibleRange } from '../../helpers/view-utils';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { spreadsheetActions } from '../../store/spreadsheet';
 
@@ -97,12 +97,17 @@ const SheetView = () => {
       const rowCells = row
         .slice(range.cols.start, range.cols.end + 1)
         .map((cell, c) => {
-          const multiselected = between(cell, multiSelection);
+          const isMultiselected = between(cell, multiSelection);
+          // Only show borders if not currently selecting.
+          const borders = ( (isMultiselected && !isSelecting) ? 
+            msBorders(cell, multiSelection) : {});
           return (
             <Cell
               key={c}
               cell={cell} 
-              selected={same(cell, selectedCell) || multiselected}
+              selected={same(cell, selectedCell)}
+              multiselected={isMultiselected}
+              borders={borders}
               pointerDown={onPointerDownHandler}
               pointerEnter={onPointerEnterHandler}
               pointerUp={onPointerUpHandler}

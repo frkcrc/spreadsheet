@@ -58,8 +58,22 @@ export function msFix(x, y) {
 // Checks if a cell is inside the box delimited by the given start/end.
 export function between(x, multiSelection) {
   if (!x || !multiSelection)
-    return false;
+    return undefined;
   const {start, end} = multiSelection;
   return (x.row >= start.row && x.row <= end.row &&
           x.col >= start.col && x.col <= end.col);
 } 
+
+// Returns an object marking what edges of a multiselection box the cell
+// should render, if any.
+export function msBorders(x, multiSelection) {
+  const borders = {};
+  if (!x || !multiSelection)
+    return borders;
+  const {start, end} = multiSelection;
+  borders.top = x.row === start.row;
+  borders.bottom = x.row === end.row;
+  borders.left = x.col === start.col;
+  borders.right = x.col === end.col;
+  return borders;
+}
