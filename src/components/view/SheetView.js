@@ -35,6 +35,7 @@ const SheetView = () => {
     const target = { row: cell.row, col: cell.col }; 
     dispatch(spreadsheetActions.selectCell(target));
     dispatch(spreadsheetActions.selectMultiple(msFix(target, target)));
+    console.log(e.button);
     if (e.button === 0) { // Only multiselect on left click.
       setIsSelecting(true);
     }
@@ -48,6 +49,8 @@ const SheetView = () => {
   };
 
   const onPointerUpHandler = cell => {
+    if (!isSelecting)
+      return;
     setIsSelecting(false);
     const target = { row: cell.row, col: cell.col }
     dispatch(spreadsheetActions.selectMultiple(msFix(selectedCell, target)));
