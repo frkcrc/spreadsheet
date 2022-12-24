@@ -31,11 +31,13 @@ const SheetView = () => {
 
   // Handlers.
   
-  const onPointerDownHandler = cell => {
+  const onPointerDownHandler = (e, cell) => {
     const target = { row: cell.row, col: cell.col }; 
     dispatch(spreadsheetActions.selectCell(target));
     dispatch(spreadsheetActions.selectMultiple(msFix(target, target)));
-    setIsSelecting(true);
+    if (e.button === 0) { // Only multiselect on left click.
+      setIsSelecting(true);
+    }
   };
 
   const onPointerEnterHandler = cell => {

@@ -26,7 +26,7 @@ const Cell = props => {
     <div
       className={classes.join(' ')}
       style={style}
-      onPointerDown={() => props.pointerDown?.(cell)}
+      onPointerDown={e => props.pointerDown?.(e, cell)}
       onPointerEnter={() => props.pointerEnter?.(cell)}
       onPointerUp={() => props.pointerUp?.(cell)}
     >{cell.content}</div>
