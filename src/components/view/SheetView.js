@@ -35,7 +35,6 @@ const SheetView = () => {
     const target = { row: cell.row, col: cell.col }; 
     dispatch(spreadsheetActions.selectCell(target));
     dispatch(spreadsheetActions.selectMultiple(msFix(target, target)));
-    console.log(e.button);
     if (e.button === 0) { // Only multiselect on left click.
       setIsSelecting(true);
     }
