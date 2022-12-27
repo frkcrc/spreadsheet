@@ -1,7 +1,10 @@
+import { useDispatch } from 'react-redux';
+import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './Cell.module.scss';
 
 const Cell = props => {
 
+  const dispatch = useDispatch();
   const cell = props.cell;
 
   // Build classes for the cell.
@@ -22,6 +25,12 @@ const Cell = props => {
     height: cell.height,
   };
 
+  // Handlers
+
+  const contextMenuHandler = e => {
+    dispatch(spreadsheetActions.setPopup({show: true, data: null}));
+  };
+
   return (
     <div
       className={classes.join(' ')}
@@ -29,6 +38,7 @@ const Cell = props => {
       onPointerDown={e => props.pointerDown?.(e, cell)}
       onPointerEnter={() => props.pointerEnter?.(cell)}
       onPointerUp={() => props.pointerUp?.(cell)}
+      onContextMenu={contextMenuHandler}
     >{cell.content}</div>
   );
 };
