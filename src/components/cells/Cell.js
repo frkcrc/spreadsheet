@@ -31,7 +31,8 @@ const Cell = props => {
     dispatch(spreadsheetActions.setPopup({
       show: true, 
       data: {
-        anchor: { x: e.clientX, y: e.clientY }
+        anchor: { x: e.clientX, y: e.clientY },
+        type: 'cell'
       }
     }));
   };
