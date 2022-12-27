@@ -32,7 +32,7 @@ const Cell = props => {
       show: true, 
       data: {
         anchor: { x: e.clientX, y: e.clientY },
-        type: 'cell'
+        type: (props.head || 'cell')
       }
     }));
   };

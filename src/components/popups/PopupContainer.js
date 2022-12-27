@@ -42,8 +42,12 @@ const PopupContainer = () => {
 
     switch (data.type) {
       case 'cell':
-        popupContent = <CellPopup />;
-        break;
+        popupContent = <CellPopup />; break;
+      case 'row':
+        popupContent = <CellPopup />; break;
+      case 'col':
+        popupContent = <CellPopup />; break;
+      default: break;
     }
   }
 
