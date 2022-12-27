@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { scrollbarThickness } from '../../helpers/constants';
+import CellPopup from './CellPopup';
 import styles from './PopupContainer.module.scss';
 
 const PopupContainer = () => {
@@ -32,12 +33,21 @@ const PopupContainer = () => {
   const classList = [styles.popup];
   if (show) { classList.push(styles.active); }
   
-  // Setup styles.
+  // Setup content and styles.
   const popupStyle = {};
+  let popupContent = false;
   if (show) {
-    popupStyle.left = data?.anchor.x + offsets.x;
-    popupStyle.top = data?.anchor.y + offsets.y;
+    popupStyle.left = data.anchor.x + offsets.x;
+    popupStyle.top = data.anchor.y + offsets.y;
+
+    switch (data.type) {
+      case 'cell':
+        popupContent = <CellPopup />;
+        break;
+    }
   }
+
+  // 
 
   return (
     <div className={styles.popupContainer}>
@@ -46,7 +56,7 @@ const PopupContainer = () => {
         style={popupStyle}
         ref={innerRef}
       >
-        Test popup.
+        {popupContent}
       </div>
     </div>
   );
