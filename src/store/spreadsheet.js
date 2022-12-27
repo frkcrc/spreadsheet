@@ -56,6 +56,10 @@ const spreadsheetSlice = createSlice({
       const { axis, delta } = action.payload;
       changePosition(state, axis, delta);
     },
+
+    setPopup: (state, action) => {
+      state.popup = action.payload;
+    },
     
   }
 });
