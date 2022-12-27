@@ -2,8 +2,8 @@ import styles from './PopupListItem.module.scss';
 
 const PopupListItem = () => {
   return (
-    <div>
-      
+    <div className={styles.listItem}>
+      Test list item
     </div>
   )
 };

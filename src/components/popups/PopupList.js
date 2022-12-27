@@ -1,9 +1,10 @@
 import styles from './PopupList.module.scss';
+import PopupListItem from './PopupListItem';
 
-const PopupList = () => {
+const PopupList = props => {
   return (
-    <div>
-      
+    <div className={styles.listContainer}>
+      {props.children}
     </div>
   )
 };
