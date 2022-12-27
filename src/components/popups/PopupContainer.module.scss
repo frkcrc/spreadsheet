@@ -1,0 +1,19 @@
+.popupContainer {
+
+  .popup {
+    display: none;
+  }
+
+  .popupActive {
+    display: block;
+    position: absolute;
+    z-index: 100;
+
+    /* Dummy styles -- will be dynamic. */
+    top: 50px;
+    left: 50px;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(255, 0, 0);
+  }
+}
