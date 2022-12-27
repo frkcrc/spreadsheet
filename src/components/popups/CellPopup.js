@@ -4,9 +4,12 @@ import PopupListItem from "./PopupListItem";
 const CellPopup = () => {
   return (
     <PopupList>
-      <PopupListItem />
-      <PopupListItem />
-      <PopupListItem />
+      <PopupListItem
+        label="Sample Item"
+      />
+      <PopupListItem
+        label="Anotehr Sample Item"
+      />
     </PopupList>
   )
 };
