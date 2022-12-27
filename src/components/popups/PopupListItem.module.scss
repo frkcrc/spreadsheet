@@ -1,3 +1,23 @@
+@use '../../styles/colors.scss';
+
 .listItem {
+
+  display: flex;
+  align-items: center;
+
+  padding: 15px 20px;
+  height: 30px;
+
+  color: colors.$text-cells;
+  user-select: none;
   
+  &:not(:last-child) {
+    border-bottom: 1px solid white;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: colors.$darker-gray;
+  }
+
 }

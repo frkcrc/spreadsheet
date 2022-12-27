@@ -1,5 +1,4 @@
 import styles from './PopupList.module.scss';
-import PopupListItem from './PopupListItem';
 
 const PopupList = props => {
   return (
