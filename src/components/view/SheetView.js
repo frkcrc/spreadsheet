@@ -131,14 +131,14 @@ const SheetView = () => {
       <div className={styles.header}>
         <Spacer width={rowHeadWidth} height={defaultHeight} />
         <div className={styles.colHeaders}>
-          {colHeads.map((c, i) => <Cell head cell={c} key={i} />)}
+          {colHeads.map((c, i) => <Cell head='col' cell={c} key={i} />)}
         </div>
       </div>
       
       <div className={styles.content}>
 
         <div className={styles.rowHeadings}>
-          {rowHeads.map((r, i) => <Cell head cell={r} key={i} />)}
+          {rowHeads.map((r, i) => <Cell head='row' cell={r} key={i} />)}
         </div>
 
         <div className={styles.view} ref={viewRef}>
