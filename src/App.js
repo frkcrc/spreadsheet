@@ -5,17 +5,20 @@ import PopupContainer from './components/popups/PopupContainer';
 
 import styles from './App.module.scss';
 import { spreadsheetActions } from './store/spreadsheet';
+import { useDispatch } from 'react-redux';
 
 function App() {
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const cancelPopup = () => {
-      spreadsheetActions.setPopup({ show: false, data: null });
+      dispatch(spreadsheetActions.setPopup({ show: false, data: null }));      ;
     };
     document.addEventListener('pointerdown', cancelPopup);
     return _ => 
       document.removeEventListener('pointerdown', cancelPopup);
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
