@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { scrollbarThickness } from '../../helpers/constants';
 import CellPopup from './CellPopup';
+import ColPopup from './ColPopup';
 import styles from './PopupContainer.module.scss';
 
 const PopupContainer = () => {
@@ -46,7 +47,7 @@ const PopupContainer = () => {
       case 'row':
         popupContent = <CellPopup />; break;
       case 'col':
-        popupContent = <CellPopup />; break;
+        popupContent = <ColPopup />; break;
       default: break;
     }
   }
