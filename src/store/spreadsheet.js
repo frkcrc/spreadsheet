@@ -8,14 +8,17 @@ const spreadsheetSlice = createSlice({
   name: 'spreadsheet',
 
   initialState: {
+    // Sheets data
+    nextId: 4,
     selected: 0,
     sheets: [
       new Sheet('Sheet 1'),
       new Sheet('Sheet 2'),
       new Sheet('Sheet 3')
     ],
+    // View data
     viewport: { width: 0, height: 0 },
-    nextId: 4,
+    popup: { show: false, data: null }
   },
 
   reducers: {
