@@ -65,7 +65,8 @@ const Scrollbar = props => {
   };
 
   const stopDraggingHandler = e => {
-    e.target.releasePointerCapture(pointerId);
+    if (pointerId !== undefined)
+      e.target.releasePointerCapture(pointerId);
     setPointerId(undefined);
   };
 
