@@ -27,6 +27,10 @@ const PopupContainer = () => {
       });
     }
   }, [show, data, innerRef]);
+
+  // Setup CSS classes.
+  const classList = [styles.popup];
+  if (show) { classList.push(styles.active); }
   
   // Setup styles.
   const popupStyle = {};
@@ -38,7 +42,7 @@ const PopupContainer = () => {
   return (
     <div className={styles.popupContainer}>
       <div
-        className={show ? styles.popupActive : styles.popup}
+        className={classList.join(' ')}
         style={popupStyle}
         ref={innerRef}
       >

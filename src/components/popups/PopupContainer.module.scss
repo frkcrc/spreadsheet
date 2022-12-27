@@ -1,17 +1,25 @@
+@use '../../styles/colors.scss';
+
 .popupContainer {
 
   .popup {
     display: none;
-  }
 
-  .popupActive {
-    display: block;
-    position: absolute;
-    z-index: 100;
+    background-color: colors.$base-gray;
+    border: 1px solid colors.$dark-gray;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px colors.$shadow-gray;
+
+    padding: 10px;
 
     /* Dummy styles -- will be dynamic. */
     width: 100px;
     height: 100px;
-    background-color: rgb(255, 0, 0);
+  }
+
+  .active {
+    display: block;
+    position: absolute;
+    z-index: 100;
   }
 }
