@@ -28,7 +28,12 @@ const Cell = props => {
   // Handlers
 
   const contextMenuHandler = e => {
-    dispatch(spreadsheetActions.setPopup({show: true, data: null}));
+    dispatch(spreadsheetActions.setPopup({
+      show: true, 
+      data: {
+        anchor: { x: e.clientX, y: e.clientY }
+      }
+    }));
   };
 
   return (
