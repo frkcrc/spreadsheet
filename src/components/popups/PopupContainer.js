@@ -43,11 +43,11 @@ const PopupContainer = () => {
 
     switch (data.type) {
       case 'cell':
-        popupContent = <CellPopup />; break;
+        popupContent = <CellPopup payload={data.payload} />; break;
       case 'row':
-        popupContent = <CellPopup />; break;
+        popupContent = <CellPopup payload={data.payload} />; break;
       case 'col':
-        popupContent = <ColPopup />; break;
+        popupContent = <ColPopup payload={data.payload} />; break;
       default: break;
     }
   }
