@@ -32,7 +32,8 @@ const Cell = props => {
       show: true, 
       data: {
         anchor: { x: e.clientX, y: e.clientY },
-        type: (props.head || 'cell')
+        type: (props.head || 'cell'),
+        payload: cell
       }
     }));
   };
