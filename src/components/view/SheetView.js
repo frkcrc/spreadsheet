@@ -84,7 +84,8 @@ const SheetView = () => {
   const colHeads = cells[0]
     .slice(range.cols.start, range.cols.end + 1)
     .map((_, i) => new CellData({
-      content: colToName(range.cols.start + i)
+      content: colToName(range.cols.start + i),
+      col: i,
     }));
   
   const rowHeads = cells
@@ -92,6 +93,7 @@ const SheetView = () => {
     .map((_, i) => new CellData({
       content: `${range.rows.start+i+1}`,
       width: rowHeadWidth,
+      row: i,
     }));
   
   const renderedSheet = cells
