@@ -63,6 +63,7 @@ const spreadsheetSlice = createSlice({
 
     addColumn: (state, action) => {
       addColumn(state.sheets[state.selected], action.payload);
+      changeOffset(state, 'cols', 0); // Fix offsets.
     },
 
     removeColumn: (state, action) => {
