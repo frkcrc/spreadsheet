@@ -49,7 +49,7 @@ export function Sheet(name, sheetRows, sheetCols) {
 // Boundaries are the partial sums of width/height.
 // Height and width are the total in pixel.
 // Offset is the offset from the start of the current view, in pixels.
-export function calculateView(cells) {
+export function calculateView(cells, oldView) {
   // Extract all widths/heights.
   const colWidths = cells[0].map(c => c.width);
   const rowHeights = cells.map(r => r[0].height);
@@ -69,15 +69,30 @@ export function calculateView(cells) {
       sizes: rowHeights,
       total: height,
       boundaries: boundariesRows,
-      start: 0,
-      offset: 0
+      start: (oldView?.rows.start ?? 0),
+      offset: (oldView?.rows.offset ?? 0)
     },
     cols: {
       sizes: colWidths,
       total: width,
       boundaries: boundariesCols,
-      start: 0,
-      offset: 0
+      start: (oldView?.cols.start ?? 0),
+      offset: (oldView?.cols.offset ?? 0)
     }
   };
+}
+
+// Adds a column to the sheet at the given position.
+export function addColumn(sheet, index) {
+  const cells = sheet.cells;
+  // Add the new column's cell to each row.
+  for (let i = 0; i < cells.length; i++) {
+    const row = cells[i];
+    row.splice(index, 0, CellData({row: i, col: index}));
+    for (let j = index + 1; j < row.length; j++) {
+      row[j].col++;
+    }
+  }
+  // Rebuild view data.
+  sheet.view = calculateView(cells, sheet.view);
 }
