@@ -11,15 +11,15 @@ const RowPopup = props => {
   // Handlers.
 
   const addAbove = () => {
-    
+    dispatch(spreadsheetActions.addRow(row));
   };
 
   const addBelow = () => {
-    
+    dispatch(spreadsheetActions.addRow(row + 1));
   };
 
   const removeRow = () => {
-    
+    dispatch(spreadsheetActions.removeRow(row));
   };
 
   const clearRow = () => {

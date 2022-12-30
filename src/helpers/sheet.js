@@ -111,3 +111,35 @@ export function removeColumn(sheet, index) {
   // Rebuild view data.
   sheet.view = calculateView(cells, sheet.view);
 }
+
+// Adds a row to the sheet at the given position.
+export function addRow(sheet, index) {
+  const cells = sheet.cells;
+  // Add the new row of cells and fix indexes.
+  cells.splice(index, 0, new Array(cells[0].length));
+  for (let j = 0; j < cells[index].length; j++) {
+    cells[index][j] = CellData({row: index, col: j});
+  }
+  for (let i = index; i < cells.length; i++) {
+    for (let j = 0; j < cells[index].length; j++) {
+      cells[i][j].row++;
+    }
+  }
+  // Rebuild view data.
+  sheet.view = calculateView(cells, sheet.view);
+}
+
+// Removes a column from the sheet.
+export function removeRow(sheet, index) {
+  const cells = sheet.cells;
+  // Remove the row and fix indices.
+  cells.splice(index, 1);
+  for (let i = index; i < cells.length; i++) {
+    const row = cells[i];
+    for (let j = 0; j < row.length; j++) {
+      row[j].row--;
+    }
+  }
+  // Rebuild view data.
+  sheet.view = calculateView(cells, sheet.view);
+}
