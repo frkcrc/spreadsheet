@@ -19,7 +19,7 @@ const ColPopup = props => {
   };
 
   const removeCol = () => {
-
+    dispatch(spreadsheetActions.removeColumn(column));
   };
 
   const clearCol = () => {

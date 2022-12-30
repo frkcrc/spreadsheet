@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementalSheetName } from "../helpers/constants";
-import { Sheet, addColumn } from "../helpers/sheet";
+import { Sheet, addColumn, removeColumn } from "../helpers/sheet";
 import { changeOffset, changePosition } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
@@ -63,6 +63,11 @@ const spreadsheetSlice = createSlice({
 
     addColumn: (state, action) => {
       addColumn(state.sheets[state.selected], action.payload);
+    },
+
+    removeColumn: (state, action) => {
+      removeColumn(state.sheets[state.selected], action.payload);
+      changeOffset(state, 'cols', 0); // Fix offsets.
     },
     
   }

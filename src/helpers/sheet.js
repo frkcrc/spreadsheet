@@ -96,3 +96,18 @@ export function addColumn(sheet, index) {
   // Rebuild view data.
   sheet.view = calculateView(cells, sheet.view);
 }
+
+// Removes a column from the sheet.
+export function removeColumn(sheet, index) {
+  const cells = sheet.cells;
+  // Remove the column cell from each row.
+  for (let i = 0; i < cells.length; i++) {
+    const row = cells[i];
+    row.splice(index, 1);
+    for (let j = index; j < row.length; j++) {
+      row[j].col--;
+    }
+  }
+  // Rebuild view data.
+  sheet.view = calculateView(cells, sheet.view);
+}
