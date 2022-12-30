@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementalSheetName } from "../helpers/constants";
-import { Sheet } from "../helpers/sheet";
+import { Sheet, addColumn } from "../helpers/sheet";
 import { changeOffset, changePosition } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
@@ -59,6 +59,10 @@ const spreadsheetSlice = createSlice({
 
     setPopup: (state, action) => {
       state.popup = action.payload;
+    },
+
+    addColumn: (state, action) => {
+      addColumn(state.sheets[state.selected], action.payload);
     },
     
   }

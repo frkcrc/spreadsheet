@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { spreadsheetActions } from "../../store/spreadsheet";
 import PopupList from "./PopupList";
 import PopupListItem from "./PopupListItem";
 
@@ -10,11 +11,11 @@ const ColPopup = props => {
   // Handlers.
 
   const addLeft = () => {
-    
+    dispatch(spreadsheetActions.addColumn(column));
   };
 
   const addRight = () => {
-
+    dispatch(spreadsheetActions.addColumn(column + 1));
   };
 
   const removeCol = () => {
