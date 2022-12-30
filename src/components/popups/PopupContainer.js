@@ -4,6 +4,7 @@ import { scrollbarThickness } from '../../helpers/constants';
 import CellPopup from './CellPopup';
 import ColPopup from './ColPopup';
 import styles from './PopupContainer.module.scss';
+import RowPopup from './RowPopup';
 
 const PopupContainer = () => {
 
@@ -45,7 +46,7 @@ const PopupContainer = () => {
       case 'cell':
         popupContent = <CellPopup payload={data.payload} />; break;
       case 'row':
-        popupContent = <CellPopup payload={data.payload} />; break;
+        popupContent = <RowPopup payload={data.payload} />; break;
       case 'col':
         popupContent = <ColPopup payload={data.payload} />; break;
       default: break;
