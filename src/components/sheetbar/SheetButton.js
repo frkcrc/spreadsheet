@@ -15,6 +15,8 @@ const SheetButton = props => {
   };
 
   const contextMenuHandler = e => {
+    if (!selected)
+      dispatch(spreadsheetActions.selectSheet(sheetID));
     dispatch(spreadsheetActions.setPopup({
       show: true, 
       data: {
