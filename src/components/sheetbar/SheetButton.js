@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './SheetButton.module.scss';
 
@@ -14,6 +14,17 @@ const SheetButton = props => {
       dispatch(spreadsheetActions.selectSheet(sheetID));
   };
 
+  const contextMenuHandler = e => {
+    dispatch(spreadsheetActions.setPopup({
+      show: true, 
+      data: {
+        anchor: { x: e.clientX, y: e.clientY },
+        type: 'sheet',
+        payload: sheetID
+      }
+    }));
+  };
+
   const cssClass = 
     selected ? styles.sheetSelectorActive : styles.sheetSelector;
 
@@ -21,6 +32,7 @@ const SheetButton = props => {
     <div
       className={cssClass}
       onClick={selectHandler}
+      onContextMenu={contextMenuHandler}
     >
       <span>{name}</span>
     </div>

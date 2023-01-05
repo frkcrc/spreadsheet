@@ -5,6 +5,7 @@ import PopupListItem from "./PopupListItem";
 
 const SheetPopup = props => {
 
+  const id = props.payload;
   const dispatch = useDispatch();
 
   // Handlers.

@@ -5,6 +5,7 @@ import CellPopup from './CellPopup';
 import ColPopup from './ColPopup';
 import styles from './PopupContainer.module.scss';
 import RowPopup from './RowPopup';
+import SheetPopup from './SheetPopup';
 
 const PopupContainer = () => {
 
@@ -49,6 +50,8 @@ const PopupContainer = () => {
         popupContent = <RowPopup payload={data.payload} />; break;
       case 'col':
         popupContent = <ColPopup payload={data.payload} />; break;
+      case 'sheet':
+        popupContent = <SheetPopup payload={data.payload} />; break;
       default: break;
     }
   }
