@@ -1,6 +1,6 @@
 // Functions that transform pieces of state related to the view.
 
-import { visibleRange, visibleRangeFull } from "./view-utils";
+import { visibleRangeFull } from "./view-utils";
 
 // Fixes the starting points based on the offset values.
 export function fixStartingPoints(view) {
