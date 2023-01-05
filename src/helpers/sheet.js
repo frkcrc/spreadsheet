@@ -37,7 +37,7 @@ export function Sheet(name, sheetRows, sheetCols) {
   }
 
   sheet.view = {
-    selectedCell: { row: 0, col: 0 },
+    selectedCell: null,
     multiSelection: null,
     ...calculateView(sheet.cells),
   };
