@@ -43,10 +43,14 @@ const spreadsheetSlice = createSlice({
       const { rowDelta, colDelta } = action.payload;
       const view = state.sheets[state.selected].view;
       const selected = view.selectedCell;
-      view.selectedCell = clampCellCoord(state, {
-        row: selected.row + rowDelta,
-        col: selected.col + colDelta,
-      });
+      if (selected) {
+        view.selectedCell = clampCellCoord(state, {
+          row: selected.row + rowDelta,
+          col: selected.col + colDelta,
+        });
+      } else { // If none is selected, select (0,0).
+        view.selectedCell = { row: 0, col: 0 };
+      }
       view.multiSelection = null;
       makeSelectionVisible(state);
     },
