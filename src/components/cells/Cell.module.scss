@@ -21,6 +21,7 @@
 
 .head {
   font-weight: 700;
+  position: relative; /* To position handles. */
 
   background-color: colors.$base-gray;
   color: colors.$text-labels;

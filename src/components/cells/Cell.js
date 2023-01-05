@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './Cell.module.scss';
+import Handle from './Handle';
 
 const Cell = props => {
 
@@ -46,7 +47,10 @@ const Cell = props => {
       onPointerEnter={() => props.pointerEnter?.(cell)}
       onPointerUp={() => props.pointerUp?.(cell)}
       onContextMenu={contextMenuHandler}
-    >{cell.content}</div>
+    >
+      {cell.content}
+      {props.head && <Handle type={props.head}/>}
+    </div>
   );
 };
 
