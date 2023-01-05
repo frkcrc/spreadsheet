@@ -83,16 +83,18 @@ const SheetView = () => {
   // Build the view in the visible range.
   const colHeads = cells[0]
     .slice(range.cols.start, range.cols.end + 1)
-    .map((_, i) => new CellData({
+    .map((c, i) => new CellData({
       content: colToName(range.cols.start + i),
       col: i,
+      width: c.width
     }));
   
   const rowHeads = cells
     .slice(range.rows.start, range.rows.end + 1)
-    .map((_, i) => new CellData({
+    .map((r, i) => new CellData({
       content: `${range.rows.start+i+1}`,
       width: rowHeadWidth,
+      height: r[0].height,
       row: i,
     }));
   
