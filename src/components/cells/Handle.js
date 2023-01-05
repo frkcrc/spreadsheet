@@ -9,8 +9,10 @@ const Handle = props => {
   const [handlerOffset, setHandlerOffset] = useState(0);
 
   const type = props.type;
-  const size = props.size;
+  const cell = props.cell;
   const isCol = type === 'col';
+  const size = (isCol ? cell.width : cell.height);
+  const id = (isCol ? cell.col : cell.row);
 
   const classes = [styles[`handle${type}`]];
   if (handlerOffset !== 0)
@@ -66,7 +68,7 @@ const Handle = props => {
       onContextMenu={stopDraggingHandler} // To stop dragging on right click.
       onPointerMove={draggingHandler}
     >
-      
+
     </div>
   );
 };

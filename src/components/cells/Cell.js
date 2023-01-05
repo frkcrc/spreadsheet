@@ -52,7 +52,7 @@ const Cell = props => {
       {props.head && 
         <Handle
           type={props.head}
-          size={props.head === 'row' ? cell.height : cell.width}
+          cell={cell}
         />}
     </div>
   );
