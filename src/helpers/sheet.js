@@ -143,3 +143,17 @@ export function removeRow(sheet, index) {
   // Rebuild view data.
   sheet.view = calculateView(cells, sheet.view);
 }
+
+// Resizes a column in the sheet.
+export function resizeCol(sheet, index, width) {
+  const cells = sheet.cells;
+  // Change the width of the column in each cell.
+  for (let i = 0; i < cells.length; i++) {
+    cells[i][index].width = width;
+  }// Rebuild view data (saving selection).
+  const selectedCell = sheet.view.selectedCell;
+  const multiSelection = sheet.view.multiSelection;
+  sheet.view = calculateView(cells, sheet.view);
+  sheet.view.selectedCell = selectedCell;
+  sheet.view.multiSelection = multiSelection;
+}

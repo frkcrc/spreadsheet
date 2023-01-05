@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { minColWidth, minRowHeight } from '../../helpers/constants';
+import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './Handle.module.scss';
 
 const Handle = props => {
+
+  const dispatch = useDispatch();
 
   const [pointerId, setPointerId] = useState(undefined);
   const [startPos, setStartPos] = useState(undefined);
@@ -40,8 +44,10 @@ const Handle = props => {
       e.target.releasePointerCapture(pointerId);
     setPointerId(undefined);
     if (isCol) {
-      const offset = Math.max(size - minColWidth, handlerOffset);
-      // TODO: Actually resize.
+      dispatch(spreadsheetActions.resizeColumn({
+        index: id,
+        width: Math.max(size + handlerOffset, minColWidth)
+      }));
     } else {
       const offset = Math.max(size - minRowHeight, handlerOffset);
       // TODO: Actually resize.
