@@ -9,7 +9,11 @@ const Handle = props => {
 
   const type = props.type;
   const isCol = type === 'col';
-  const className = styles[`handle${type}`];
+
+  const classes = [styles[`handle${type}`]];
+  if (handlerOffset !== 0)
+    classes.push(styles.dragging);
+
   const inlineStyles = {};
   if (isCol) inlineStyles.right = `${-handlerOffset}px`;
   else inlineStyles.bottom = `${-handlerOffset}px`;
@@ -40,7 +44,7 @@ const Handle = props => {
 
   return (
     <div 
-      className={className}
+      className={classes.join(' ')}
       style={inlineStyles}
       onPointerDown={startDraggingHandler}
       onPointerUp={stopDraggingHandler}
