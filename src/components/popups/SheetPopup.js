@@ -10,19 +10,12 @@ const SheetPopup = props => {
 
   // Handlers.
 
-  const renameHandler = () => {
-  };
-
   const deleteHandler = () => {
     dispatch(spreadsheetActions.removeSheet(id));
   };
 
   return (
     <PopupList>
-      <PopupListItem
-        label="Rename"
-        onClick={renameHandler}
-      />
       <PopupListItem
         label="Delete"
         onClick={deleteHandler}
