@@ -1,0 +1,29 @@
+@use '../../styles/colors.scss';
+
+.sheetSelector {
+  flex: 0 0 content;
+
+  background-color: transparent;
+  color: colors.$text-cells;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+
+  padding-left: 14px;
+  padding-right: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  &:not(:first-child) {
+    margin-left: 2px;
+  }
+
+  &Active {
+    @extend .sheetSelector;
+    background-color: colors.$base-gray;
+    cursor: default;
+  }
+
+}

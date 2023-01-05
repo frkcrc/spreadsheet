@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './SheetBar.module.scss';
+import SheetButton from './SheetButton';
 
 const SheetBar = () => {
 
@@ -12,15 +13,6 @@ const SheetBar = () => {
     dispatch(spreadsheetActions.newSheet());
   };
 
-  const selectSheet = (i) => {
-    if (i === selected)
-      return;
-    dispatch(spreadsheetActions.selectSheet(i));
-  };
-
-  const getClass = (i) =>
-    selected === i ? styles.sheetSelectorActive : styles.sheetSelector;
-
   return (
     <div className={styles.sheetBar}>
         <div className={styles.addButton}>
@@ -31,13 +23,12 @@ const SheetBar = () => {
         </div>
         <div className={styles.selectorsContainer}>
           {sheets.map((s, i) => 
-            <div
-              className={getClass(i)}
-              onClick={() => selectSheet(i)}
+            <SheetButton 
               key={i}
-            >
-              <span>{s.name}</span>
-            </div>
+              id={i}
+              selected={i===selected}
+              name={s.name}
+            />
           )}
         </div>
         
