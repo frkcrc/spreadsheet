@@ -49,7 +49,11 @@ const Cell = props => {
       onContextMenu={contextMenuHandler}
     >
       {cell.content}
-      {props.head && <Handle type={props.head}/>}
+      {props.head && 
+        <Handle
+          type={props.head}
+          size={props.head === 'row' ? cell.height : cell.width}
+        />}
     </div>
   );
 };

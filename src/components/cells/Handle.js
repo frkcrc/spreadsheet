@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { minColWidth, minRowHeight } from '../../helpers/constants';
 import styles from './Handle.module.scss';
 
 const Handle = props => {
@@ -8,15 +9,22 @@ const Handle = props => {
   const [handlerOffset, setHandlerOffset] = useState(0);
 
   const type = props.type;
+  const size = props.size;
   const isCol = type === 'col';
 
   const classes = [styles[`handle${type}`]];
   if (handlerOffset !== 0)
     classes.push(styles.dragging);
 
+  // Set inline styles for positioning while dragging. 
   const inlineStyles = {};
-  if (isCol) inlineStyles.right = `${-handlerOffset}px`;
-  else inlineStyles.bottom = `${-handlerOffset}px`;
+  if (isCol) {
+    const offset = Math.min(size - minColWidth, -handlerOffset);
+    inlineStyles.right = `${offset}px`;
+  } else {
+    const offset = Math.min(size - minRowHeight, -handlerOffset);
+    inlineStyles.bottom = `${offset}px`;
+  }
 
   // Handlers.
   const startDraggingHandler = e => {
