@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementalSheetName } from "../helpers/constants";
 import { Sheet, addColumn, removeColumn, addRow, removeRow } from "../helpers/sheet";
-import { changeOffset, changePosition, clampCellCoord } from "../helpers/view-state";
+import { changeOffset, changePosition, clampCellCoord, makeSelectionVisible } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
 
@@ -48,6 +48,7 @@ const spreadsheetSlice = createSlice({
         col: selected.col + colDelta,
       });
       view.multiSelection = null;
+      makeSelectionVisible(state);
     },
 
     newSheet: (state) => {
