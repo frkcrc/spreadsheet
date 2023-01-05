@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementalSheetName } from "../helpers/constants";
 import { Sheet, addColumn, removeColumn, addRow, removeRow } from "../helpers/sheet";
-import { changeOffset, changePosition } from "../helpers/view-state";
+import { changeOffset, changePosition, clampCellCoord } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
 
@@ -37,6 +37,17 @@ const spreadsheetSlice = createSlice({
 
     selectMultiple: (state, action) => {
       state.sheets[state.selected].view.multiSelection = action.payload;
+    },
+
+    selectMove: (state, action) => {
+      const { rowDelta, colDelta } = action.payload;
+      const view = state.sheets[state.selected].view;
+      const selected = view.selectedCell;
+      view.selectedCell = clampCellCoord(state, {
+        row: selected.row + rowDelta,
+        col: selected.col + colDelta,
+      });
+      view.multiSelection = null;
     },
 
     newSheet: (state) => {

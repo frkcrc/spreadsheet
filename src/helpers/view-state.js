@@ -42,3 +42,15 @@ export function changePosition(state, axis, delta) {
   clamp(state);
   fixStartingPoints(state.sheets[state.selected].view);
 }
+
+// Clamp the row/col coordinates to valid coordinates in the sheet.
+export function clampCellCoord(state, {row, col}) {
+  const view = state.sheets[state.selected].view;
+  const rows = view.rows.sizes.length - 1;
+  const cols = view.cols.sizes.length - 1;
+  const clamped =  {
+    row: Math.max(0, Math.min(row, rows)),
+    col: Math.max(0, Math.min(col, cols)),
+  };
+  return clamped;
+}
