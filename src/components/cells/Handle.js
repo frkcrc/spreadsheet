@@ -49,8 +49,10 @@ const Handle = props => {
         width: Math.max(size + handlerOffset, minColWidth)
       }));
     } else {
-      const offset = Math.max(size - minRowHeight, handlerOffset);
-      // TODO: Actually resize.
+      dispatch(spreadsheetActions.resizeRow({
+        index: id,
+        height: Math.max(size + handlerOffset, minRowHeight)
+      }));
     }
     setHandlerOffset(0);
   };

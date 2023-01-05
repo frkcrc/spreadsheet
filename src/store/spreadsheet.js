@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementalSheetName } from "../helpers/constants";
-import { Sheet, addColumn, removeColumn, addRow, removeRow, resizeCol } from "../helpers/sheet";
+import { Sheet, addColumn, removeColumn, addRow, removeRow, resizeCol, resizeRow } from "../helpers/sheet";
 import { changeOffset, changePosition, clampCellCoord, makeSelectionVisible } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
@@ -110,6 +110,13 @@ const spreadsheetSlice = createSlice({
       const {index, width} = action.payload;
       resizeCol(state.sheets[state.selected], index, width);
       changeOffset(state, 'cols', 0); // Fix offsets.
+    },
+
+    resizeRow: (state, action) => {
+      // Change the column width.
+      const {index, height} = action.payload;
+      resizeRow(state.sheets[state.selected], index, height);
+      changeOffset(state, 'rows', 0); // Fix offsets.
     },
     
   }

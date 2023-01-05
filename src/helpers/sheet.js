@@ -150,7 +150,21 @@ export function resizeCol(sheet, index, width) {
   // Change the width of the column in each cell.
   for (let i = 0; i < cells.length; i++) {
     cells[i][index].width = width;
-  }// Rebuild view data (saving selection).
+  }
+  // Rebuild view data (saving selection).
+  const selectedCell = sheet.view.selectedCell;
+  const multiSelection = sheet.view.multiSelection;
+  sheet.view = calculateView(cells, sheet.view);
+  sheet.view.selectedCell = selectedCell;
+  sheet.view.multiSelection = multiSelection;
+}
+
+// Resizes a row in the sheet.
+export function resizeRow(sheet, index, height) {
+  const cells = sheet.cells;
+  // Change the width of every cell in the row.
+  cells[index].forEach(c => { c.height = height; });
+  // Rebuild view data (saving selection).
   const selectedCell = sheet.view.selectedCell;
   const multiSelection = sheet.view.multiSelection;
   sheet.view = calculateView(cells, sheet.view);
