@@ -37,8 +37,14 @@ const Handle = props => {
     if (pointerId !== undefined)
       e.target.releasePointerCapture(pointerId);
     setPointerId(undefined);
+    if (isCol) {
+      const offset = Math.max(size - minColWidth, handlerOffset);
+      // TODO: Actually resize.
+    } else {
+      const offset = Math.max(size - minRowHeight, handlerOffset);
+      // TODO: Actually resize.
+    }
     setHandlerOffset(0);
-    // TODO: Actual resizing of the row/col here.
   };
 
   const draggingHandler = e => {
@@ -60,7 +66,7 @@ const Handle = props => {
       onContextMenu={stopDraggingHandler} // To stop dragging on right click.
       onPointerMove={draggingHandler}
     >
-
+      
     </div>
   );
 };
