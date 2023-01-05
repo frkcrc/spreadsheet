@@ -3,6 +3,7 @@
 .handle {
 
   background-color: transparent;
+  z-index: 90;
 
   &:hover {
     background-color: colors.$dark-gray;
