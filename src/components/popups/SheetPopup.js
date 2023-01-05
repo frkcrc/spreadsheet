@@ -14,7 +14,7 @@ const SheetPopup = props => {
   };
 
   const deleteHandler = () => {
-
+    dispatch(spreadsheetActions.removeSheet(id));
   };
 
   return (

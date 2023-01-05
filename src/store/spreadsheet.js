@@ -59,6 +59,14 @@ const spreadsheetSlice = createSlice({
       state.selected = state.sheets.length - 1;
     },
 
+    removeSheet: (state, action) => {
+      const id = action.payload;
+      if (state.sheets.length > 1) { // Don't delete last sheet.
+        state.sheets.splice(id, 1);
+        state.selected = 0;
+      }
+    },
+
     addOffset: (state, action) => {
       const { axis, delta } = action.payload;
       changeOffset(state, axis, delta);
