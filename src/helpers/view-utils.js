@@ -35,6 +35,17 @@ export function visibleRange(space, {start, sizes}) {
   return lastBlock;
 }
 
+// Like visibleRange, but only counts those FULLY visible.
+export function visibleRangeFull(space, {start, sizes}) {
+  let lastBlock = start;
+  let totalSpace = sizes[start];
+  while (totalSpace <= space && lastBlock < sizes.length - 1
+         && (space - totalSpace) >= sizes[lastBlock + 1]) {
+    totalSpace += sizes[++lastBlock];
+  }
+  return lastBlock;
+}
+
 // Checks if the two objects have the same row/col properties.
 export function same(x, y) {
   return (x && y && x.row === y.row && x.col === y.col);

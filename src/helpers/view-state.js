@@ -1,6 +1,6 @@
 // Functions that transform pieces of state related to the view.
 
-import { visibleRange } from "./view-utils";
+import { visibleRange, visibleRangeFull } from "./view-utils";
 
 // Fixes the starting points based on the offset values.
 export function fixStartingPoints(view) {
@@ -64,8 +64,8 @@ export function makeSelectionVisible(state) {
   const {rows, cols, selectedCell} = view;
   const { width, height } = state.viewport;
   // Calculate start and end row/col.
-  const endRow = visibleRange(height, rows);
-  const endCol = visibleRange(width, cols);
+  const endRow = visibleRangeFull(height, rows);
+  const endCol = visibleRangeFull(width, cols);
   // Calculate the delta on rows and columns.
   let deltaRow = 0, deltaCol = 0;
   if (selectedCell.row < rows.start) {
