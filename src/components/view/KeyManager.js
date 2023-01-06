@@ -23,7 +23,7 @@ const KeyManager = () => {
       } else if (key.length === 1) { // Symbol => Start editing.
         // A bit of a hack, but works for the purpose of this demo.
         // If the key is one letter long, we assume it's printable.
-        dispatch(spreadsheetActions.setEditing());
+        dispatch(spreadsheetActions.setEditing(true));
       }
     };
     document.addEventListener('keydown', keyHandler);
