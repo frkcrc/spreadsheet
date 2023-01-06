@@ -8,7 +8,7 @@ import styles from './Cell.module.scss';
 const Cell = props => {
 
   const cellRef = useRef();
-  const editing = useSelector(state => state.spreadsheet.editing);
+  const editing = useSelector(state => state.spreadsheet.editing.editing);
   const dispatch = useDispatch();
   const cell = props.cell;
 
@@ -57,7 +57,7 @@ const Cell = props => {
   };
 
   const doubleClickHandler = e => {
-    dispatch(spreadsheetActions.setEditing());
+    dispatch(spreadsheetActions.setEditing(cell));
   };
 
   return (

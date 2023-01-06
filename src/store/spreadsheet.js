@@ -17,7 +17,11 @@ const spreadsheetSlice = createSlice({
       new Sheet('Sheet 3')
     ],
     // Editing data
-    editing: false,
+    editing: {
+      editing: false,
+      content: '',
+      cell: null,
+    },
     // View data
     viewport: { width: 0, height: 0 },
     popup: { show: false, data: null }
@@ -123,17 +127,26 @@ const spreadsheetSlice = createSlice({
       changeOffset(state, 'rows', 0); // Fix offsets.
     },
 
-    setEditing: (state) => {
-      state.editing = true;
+    setEditing: (state, action) => {
+      state.editing.editing = true;
+      state.editing.cell = action.payload;
+      state.editing.content = action.payload.content;
+    },
+
+    setEditingContent: (state, action) => {
+      state.editing.content = action.payload;
     },
 
     quitEditing: (state, action) => {
-      const {save, content, cell} = action.payload;
+      const save = action.payload;
       if (save) {
-        const {row, col} = cell;
-        state.sheets[state.selected].cells[row][col].content = content;
+        const {row, col} = state.editing.cell;
+        state.sheets[state.selected].cells[row][col].content
+          = state.editing.content;
       }
-      state.editing = false;
+      state.editing.editing = false;
+      state.editing.content = '';
+      state.editing.cell = null;
     },
     
   }
