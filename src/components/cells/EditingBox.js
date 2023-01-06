@@ -38,6 +38,10 @@ const EditingBox = props => {
     // On Esc, quit without saving.
     if (e.key === 'Enter') {
       dispatch(spreadsheetActions.quitEditing(true));
+      dispatch(spreadsheetActions.selectMove({
+        rowDelta: 1,
+        colDelta: 0
+      }));
     } else if (e.key === 'Escape') {
       dispatch(spreadsheetActions.quitEditing(false));
     }
