@@ -56,7 +56,7 @@ const EditingBox = props => {
       onBlur={onBlur}
       onKeyDown={keyHandler}
       onChange={onChangeHandler}
-      value={content}
+      value={content ?? ''}
     />
   )
 }
