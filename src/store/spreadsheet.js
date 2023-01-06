@@ -30,7 +30,7 @@ const spreadsheetSlice = createSlice({
     },
 
     selectSheet: (state, action) => {
-      state.editing.cell = null;
+      //state.editing.cell = null;
       state.selected = action.payload;
     },
 
@@ -64,7 +64,7 @@ const spreadsheetSlice = createSlice({
         new Sheet(incrementalSheetName.replace('#', id))
       );
       state.selected = state.sheets.length - 1;
-      state.editing.cell = null;
+      //state.editing.cell = null;
     },
 
     removeSheet: (state, action) => {
