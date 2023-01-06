@@ -79,7 +79,7 @@ const spreadsheetSlice = createSlice({
     },
 
     scroll: (state, action) => {
-      if (!state.editing.cell) {
+      if (!state.editing) {
         const { axis, delta } = action.payload;
         changePosition(state, axis, delta);
       }
