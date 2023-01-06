@@ -17,7 +17,7 @@ const spreadsheetSlice = createSlice({
       new Sheet('Sheet 3')
     ],
     // Editing data
-    editing: { cell: null, x: 0, y: 0},
+    editing: false,
     // View data
     viewport: { width: 0, height: 0 },
     popup: { show: false, data: null }
@@ -30,7 +30,6 @@ const spreadsheetSlice = createSlice({
     },
 
     selectSheet: (state, action) => {
-      //state.editing.cell = null;
       state.selected = action.payload;
     },
 
@@ -64,7 +63,6 @@ const spreadsheetSlice = createSlice({
         new Sheet(incrementalSheetName.replace('#', id))
       );
       state.selected = state.sheets.length - 1;
-      //state.editing.cell = null;
     },
 
     removeSheet: (state, action) => {
@@ -125,17 +123,17 @@ const spreadsheetSlice = createSlice({
       changeOffset(state, 'rows', 0); // Fix offsets.
     },
 
-    setEditing: (state, action) => {
-      state.editing = action.payload;
+    setEditing: (state) => {
+      state.editing = true;
     },
 
     quitEditing: (state, action) => {
-      const {save, content} = action.payload;
+      const {save, content, cell} = action.payload;
       if (save) {
-        const {row, col} = state.editing.cell;
+        const {row, col} = cell;
         state.sheets[state.selected].cells[row][col].content = content;
       }
-      state.editing.cell = null;
+      state.editing = false;
     },
     
   }

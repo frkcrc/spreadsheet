@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import SheetBar from './components/sheetbar/SheetBar';
 import SheetPane from './components/SheetPane';
 import PopupContainer from './components/popups/PopupContainer';
-import EditingContainer from './components/editing/EditingContainer';
 import KeyManager from './components/view/KeyManager';
 
 import styles from './App.module.scss';
@@ -32,7 +31,6 @@ function App() {
         <SheetBar />
       </div>
       <PopupContainer />
-      <EditingContainer />
       <KeyManager />
     </>
   );

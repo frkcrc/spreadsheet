@@ -1,12 +1,14 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { spreadsheetActions } from '../../store/spreadsheet';
-import styles from './Cell.module.scss';
+import EditingBox from './EditingBox';
 import Handle from './Handle';
+import styles from './Cell.module.scss';
 
 const Cell = props => {
 
   const cellRef = useRef();
+  const editing = useSelector(state => state.spreadsheet.editing);
   const dispatch = useDispatch();
   const cell = props.cell;
 
@@ -28,6 +30,19 @@ const Cell = props => {
     height: cell.height,
   };
 
+  // Build the editing box if in editing mode.
+  let editingBox = null;
+  if (props.selected && editing){
+    const bcr = cellRef.current.getBoundingClientRect();
+    editingBox = (
+      <EditingBox
+        x={bcr.left}
+        y={bcr.top}
+        cell={cell}
+      />
+    );
+  }
+
   // Handlers
 
   const contextMenuHandler = e => {
@@ -42,12 +57,7 @@ const Cell = props => {
   };
 
   const doubleClickHandler = e => {
-    const bcr = cellRef.current.getBoundingClientRect();
-    dispatch(spreadsheetActions.setEditing({
-      cell: cell,
-      x: bcr.left,
-      y: bcr.top,
-    }));
+    dispatch(spreadsheetActions.setEditing());
   };
 
   return (
@@ -67,6 +77,7 @@ const Cell = props => {
           type={props.head}
           cell={cell}
         />}
+      {editingBox}
     </div>
   );
 };

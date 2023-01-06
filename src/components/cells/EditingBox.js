@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './EditingBox.module.scss';
 
@@ -8,8 +8,7 @@ const EditingBox = props => {
   const editRef = useRef();
   const dispatch = useDispatch();
 
-  const {cell, x, y} = 
-    useSelector(state => state.spreadsheet.editing);
+  const {cell, x, y} = props;
 
   // Effect to autofocus on the input.
   useEffect(() => {
@@ -26,9 +25,11 @@ const EditingBox = props => {
 
   // Handlers.
   const onBlur = e => {
+    // Broken, fix.
     dispatch(spreadsheetActions.quitEditing({
       save: true,
-      content: editRef.current.value
+      content: editRef.current.value,
+      cell: cell
     }));
   };
 
@@ -39,11 +40,11 @@ const EditingBox = props => {
       dispatch(spreadsheetActions.quitEditing({
         save: true,
         content: editRef.current.value,
+        cell: cell
       }));
     } else if (e.key === 'Escape') {
       dispatch(spreadsheetActions.quitEditing({
-        save: false,
-        content: null
+        save: false
       }));
     }
     e.stopPropagation();
