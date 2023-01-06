@@ -42,7 +42,12 @@ const Cell = props => {
   };
 
   const doubleClickHandler = e => {
-    
+    const bcr = cellRef.current.getBoundingClientRect();
+    dispatch(spreadsheetActions.setEditing({
+      cell: cell,
+      x: bcr.left,
+      y: bcr.top,
+    }));
   };
 
   return (
