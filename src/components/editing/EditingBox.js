@@ -26,17 +26,25 @@ const EditingBox = props => {
 
   // Handlers.
   const onBlur = e => {
-    // TODO: On blur, save the changes.
-    dispatch(spreadsheetActions.quitEditing());
+    dispatch(spreadsheetActions.quitEditing({
+      save: true,
+      content: editRef.current.value
+    }));
   };
 
   const keyHandler = e => {
     // On Enter, save and quit editing.
     // On Esc, quit without saving.
     if (e.key === 'Enter') {
-      dispatch(spreadsheetActions.quitEditing()); // TODO: Save!
+      dispatch(spreadsheetActions.quitEditing({
+        save: true,
+        content: editRef.current.value,
+      }));
     } else if (e.key === 'Escape') {
-      dispatch(spreadsheetActions.quitEditing()); // TODO: Save!
+      dispatch(spreadsheetActions.quitEditing({
+        save: false,
+        content: null
+      }));
     }
     e.stopPropagation();
   }
