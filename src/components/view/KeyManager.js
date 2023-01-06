@@ -1,18 +1,19 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { spreadsheetActions } from "../../store/spreadsheet";
 
 // Handles general keystrokes events on the UI.
 const KeyManager = () => {
 
   const dispatch = useDispatch();
+  const isEditing = useSelector(state => !!state.spreadsheet.editing.cell);
 
   // Effect to handle keystrokes outside of editing mode.
   useEffect(() => {
     const keyHandler = e => {
       const key = e.key;
       // Handle arrow keys to move selection.
-      if (key.startsWith('Arrow')) {
+      if (!isEditing && key.startsWith('Arrow')) {
         let rowDelta = 0, colDelta = 0;
         if      (key === 'ArrowUp')    rowDelta = -1;
         else if (key === 'ArrowDown')  rowDelta = +1;
@@ -24,7 +25,7 @@ const KeyManager = () => {
     document.addEventListener('keydown', keyHandler);
     return _ => 
       document.removeEventListener('keydown', keyHandler);
-  }, [dispatch]);
+  }, [dispatch, isEditing]);
 
 
   return null;
