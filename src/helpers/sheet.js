@@ -131,7 +131,7 @@ export function addRow(sheet, index) {
   sheet.view = calculateView(cells, sheet.view);
 }
 
-// Removes a column from the sheet.
+// Removes a row from the sheet.
 export function removeRow(sheet, index) {
   const cells = sheet.cells;
   // Remove the row and fix indices.
@@ -181,4 +181,14 @@ export function clearColumn(sheet, index) {
   for (let i = 0; i < cells.length; i++) {
     cells[i][index].content = '';
   }
+}
+
+// Clear the contents of a row.
+export function clearRow(sheet, index) {
+  const cells = sheet.cells;
+  for (let j = 0; j < cells[index].length; j++) {
+    cells[index][j].content = '';
+  }
+  // Rebuild view data.
+  sheet.view = calculateView(cells, sheet.view);
 }

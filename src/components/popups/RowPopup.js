@@ -23,7 +23,7 @@ const RowPopup = props => {
   };
 
   const clearRow = () => {
-
+    dispatch(spreadsheetActions.clearRow(row));
   };
 
   return (
