@@ -128,6 +128,11 @@ const spreadsheetSlice = createSlice({
     setEditing: (state, action) => {
       state.editing = action.payload;
     },
+
+    quitEditing: (state, action) => {
+      // TODO: This should handle saving the changes?
+      state.editing.cell = null;
+    },
     
   }
 });
