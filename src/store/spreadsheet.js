@@ -129,9 +129,10 @@ const spreadsheetSlice = createSlice({
 
     setEditing: (state) => {
       state.editing.editing = true;
-      const selected = state.sheets[state.selected].view.selectedCell;
-      state.editing.cell = selected;
-      state.editing.content = selected.content;
+      const {row, col} = state.sheets[state.selected].view.selectedCell;
+      const cell = state.sheets[state.selected].cells[row][col];
+      state.editing.cell = cell;
+      state.editing.content = cell.content;
     },
 
     setEditingContent: (state, action) => {
