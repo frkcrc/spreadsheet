@@ -57,7 +57,7 @@ const Cell = props => {
   };
 
   const doubleClickHandler = e => {
-    dispatch(spreadsheetActions.setEditing(cell));
+    dispatch(spreadsheetActions.setEditing());
   };
 
   return (

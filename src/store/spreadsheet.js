@@ -127,10 +127,11 @@ const spreadsheetSlice = createSlice({
       changeOffset(state, 'rows', 0); // Fix offsets.
     },
 
-    setEditing: (state, action) => {
+    setEditing: (state) => {
       state.editing.editing = true;
-      state.editing.cell = action.payload;
-      state.editing.content = action.payload.content;
+      const selected = state.sheets[state.selected].view.selectedCell;
+      state.editing.cell = selected;
+      state.editing.content = selected.content;
     },
 
     setEditingContent: (state, action) => {
