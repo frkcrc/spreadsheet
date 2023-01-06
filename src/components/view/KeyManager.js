@@ -11,14 +11,15 @@ const KeyManager = () => {
   useEffect(() => {
     const keyHandler = e => {
       const key = e.key;
-      // Handle arrow keys to move selection.
-      if (key.startsWith('Arrow')) {
+      if (key.startsWith('Arrow')) { // Arrows => Move selection.
         let rowDelta = 0, colDelta = 0;
         if      (key === 'ArrowUp')    rowDelta = -1;
         else if (key === 'ArrowDown')  rowDelta = +1;
         else if (key === 'ArrowLeft')  colDelta = -1;
         else if (key === 'ArrowRight') colDelta = +1;
         dispatch(spreadsheetActions.selectMove({rowDelta, colDelta}));
+      } else if (key === 'Enter') { // Enter => Start editing.
+        dispatch(spreadsheetActions.setEditing());
       }
     };
     document.addEventListener('keydown', keyHandler);
