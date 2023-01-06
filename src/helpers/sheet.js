@@ -2,6 +2,7 @@ import {
   defaultHeight, 
   defaultSheetName, 
   defaultWidth, 
+  minColWidth, 
   minRowHeight, 
   startingCols, 
   startingRows 
@@ -75,7 +76,7 @@ export function calculateView(cells, oldView) {
     },
     cols: {
       sizes: colWidths,
-      total: width,
+      total: width + minColWidth,
       boundaries: boundariesCols,
       start: (oldView?.cols.start ?? 0),
       offset: (oldView?.cols.offset ?? 0)
