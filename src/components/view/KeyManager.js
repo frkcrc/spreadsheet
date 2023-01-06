@@ -20,6 +20,8 @@ const KeyManager = () => {
         dispatch(spreadsheetActions.selectMove({rowDelta, colDelta}));
       } else if (key === 'Enter') { // Enter => Start editing.
         dispatch(spreadsheetActions.setEditing());
+      } else if (key === 'Delete') { // Delete => Clear selection.
+        dispatch(spreadsheetActions.clearSelection());
       } else if (key.length === 1) { // Symbol => Start editing.
         // A bit of a hack, but works for the purpose of this demo.
         // If the key is one letter long, we assume it's printable.

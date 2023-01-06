@@ -189,6 +189,15 @@ export function clearRow(sheet, index) {
   for (let j = 0; j < cells[index].length; j++) {
     cells[index][j].content = '';
   }
-  // Rebuild view data.
-  sheet.view = calculateView(cells, sheet.view);
+}
+
+// Clear the contents of a multiselection square.
+export function clearSelection(sheet) {
+  const cells = sheet.cells;
+  const {start, end} = sheet.view.multiSelection;
+  for (let i = start.row; i <= end.row; i++) {
+    for (let j = start.col; j <= end.col; j++) {
+      cells[i][j].content = '';
+    }
+  }
 }

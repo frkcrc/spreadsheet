@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { incrementalSheetName } from "../helpers/constants";
-import { Sheet, addColumn, removeColumn, addRow, removeRow, resizeCol, resizeRow, clearColumn, clearRow } from "../helpers/sheet";
+import { Sheet, addColumn, removeColumn, addRow, removeRow, resizeCol, resizeRow, clearColumn, clearRow, clearSelection } from "../helpers/sheet";
 import { changeOffset, changePosition, clampCellCoord, makeSelectionVisible } from "../helpers/view-state";
 
 const spreadsheetSlice = createSlice({
@@ -133,6 +133,17 @@ const spreadsheetSlice = createSlice({
 
     clearRow: (state, action) => {
       clearRow(state.sheets[state.selected], action.payload);
+    },
+    
+    clearSelection: (state) => {
+      const view = state.sheets[state.selected].view;
+      if (view.selectedCell) {
+        const {row, col} = view.selectedCell;
+        state.sheets[state.selected].cells[row][col].content = '';
+      }
+      if (view.multiSelection) {
+        clearSelection(state.sheets[state.selected]);
+      }
     },
 
     setEditing: (state, action) => {
