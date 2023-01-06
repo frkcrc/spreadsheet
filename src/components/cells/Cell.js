@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { spreadsheetActions } from '../../store/spreadsheet';
 import styles from './Cell.module.scss';
@@ -5,6 +6,7 @@ import Handle from './Handle';
 
 const Cell = props => {
 
+  const cellRef = useRef();
   const dispatch = useDispatch();
   const cell = props.cell;
 
@@ -39,14 +41,20 @@ const Cell = props => {
     }));
   };
 
+  const doubleClickHandler = e => {
+    
+  };
+
   return (
     <div
+      ref={cellRef}
       className={classes.join(' ')}
       style={style}
       onPointerDown={e => props.pointerDown?.(e, cell)}
       onPointerEnter={() => props.pointerEnter?.(cell)}
       onPointerUp={() => props.pointerUp?.(cell)}
       onContextMenu={contextMenuHandler}
+      onDoubleClick={doubleClickHandler}
     >
       {cell.content}
       {props.head && 
