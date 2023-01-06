@@ -79,8 +79,10 @@ const spreadsheetSlice = createSlice({
     },
 
     scroll: (state, action) => {
-      const { axis, delta } = action.payload;
-      changePosition(state, axis, delta);
+      if (!state.editing.cell) {
+        const { axis, delta } = action.payload;
+        changePosition(state, axis, delta);
+      }
     },
 
     setPopup: (state, action) => {
