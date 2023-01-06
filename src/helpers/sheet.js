@@ -173,3 +173,12 @@ export function resizeRow(sheet, index, height) {
   sheet.view.selectedCell = selectedCell;
   sheet.view.multiSelection = multiSelection;
 }
+
+// Clear the contents of a column.
+export function clearColumn(sheet, index) {
+  const cells = sheet.cells;
+  // Clear the column cell in each row.
+  for (let i = 0; i < cells.length; i++) {
+    cells[i][index].content = '';
+  }
+}
