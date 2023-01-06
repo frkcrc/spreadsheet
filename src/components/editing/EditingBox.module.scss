@@ -1,0 +1,9 @@
+@use '../../styles/colors.scss';
+
+.editbox {
+  position: absolute;
+  z-index: 100;
+
+  background-color: white;
+  box-shadow: 2px 2px 4px colors.$shadow-gray;
+}

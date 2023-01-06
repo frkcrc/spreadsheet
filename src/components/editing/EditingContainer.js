@@ -1,6 +1,8 @@
+import EditingBox from "./EditingBox";
+
 const EditingContainer = () => {
   return (
-    null
+    <EditingBox />
   );
 }
 export default EditingContainer;
