@@ -16,6 +16,8 @@ const spreadsheetSlice = createSlice({
       new Sheet('Sheet 2'),
       new Sheet('Sheet 3')
     ],
+    // Editing data
+    editing: { cell: null, x: 0, y: 0},
     // View data
     viewport: { width: 0, height: 0 },
     popup: { show: false, data: null }
@@ -117,6 +119,10 @@ const spreadsheetSlice = createSlice({
       const {index, height} = action.payload;
       resizeRow(state.sheets[state.selected], index, height);
       changeOffset(state, 'rows', 0); // Fix offsets.
+    },
+
+    setEditing: (state, action) => {
+      state.editing = action.payload;
     },
     
   }
