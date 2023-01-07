@@ -8,6 +8,14 @@ const CellPopup = props => {
   const dispatch = useDispatch();
   const {row, col} = props.payload;
 
+  const clearCell = () => {
+    dispatch(spreadsheetActions.removeRow(row));
+  };
+
+  const clearSelection = () => {
+    dispatch(spreadsheetActions.clearSelection());
+  };
+  
   const removeRow = () => {
     dispatch(spreadsheetActions.removeRow(row));
   };
@@ -29,9 +37,11 @@ const CellPopup = props => {
     <PopupList>
       <PopupListItem
         label="Clear Cell"
+        onClick={clearCell}
       />
       <PopupListItem
         label="Clear Selection"
+        onClick={clearSelection}
       />
       <PopupListItem
         label="Clear Row"
