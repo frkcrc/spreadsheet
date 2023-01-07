@@ -4,7 +4,7 @@ This is a simple spreadsheet app written in React and Redux Toolkit, built for m
 
 It's meant to showcase the UI rather than spreadsheet features (which I was frankly too lazy to implement so far). It's meant for desktop browsers, not mobile.
 
-It can be seen here. 
+It can be seen [here](https://frkcrc.github.io/spreadsheet). 
 
 ## UI Features
 
@@ -25,5 +25,6 @@ I mostly implemented UI features, and neglected application features.
 - Save and load from disk.
 - Copy and paste of one/multiple cells at a time.
 - Sheet renaming.
+- Cell formatting.
 
 The entire project will probably be rewritten from scratch with the missing features as a demo for the spreadsheet engine when I have the time to work on it.
