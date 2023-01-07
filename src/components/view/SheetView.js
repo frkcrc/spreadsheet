@@ -16,6 +16,13 @@ const SheetView = () => {
   const [isSelecting, setIsSelecting] = useState(false);
   const dispatch = useDispatch();
 
+  // Extract the relevant state.
+  const viewSize = useSelector(state => state.spreadsheet.viewport);
+  const sheet = useSelector(state => 
+    state.spreadsheet.sheets[state.spreadsheet.selected]);
+  const {cells, view} = sheet;
+  const {rows, cols, selectedCell, multiSelection} = view;
+
   // Effect to set the size responsively.
   useLayoutEffect(() => {
     const calculateSize = () => {
@@ -33,9 +40,13 @@ const SheetView = () => {
   
   const onPointerDownHandler = (e, cell) => {
     const target = { row: cell.row, col: cell.col }; 
+    // If it's a right click inside a multiselection, don't change it.
+    if (e.button === 2) {
+      if (between(cell, multiSelection)) return;
+    }
     dispatch(spreadsheetActions.selectCell(target));
     dispatch(spreadsheetActions.selectMultiple(msFix(target, target)));
-    if (e.button === 0) { // Only multiselect on left click.
+    if (e.button === 0) { // Only start multiselection on left click.
       setIsSelecting(true);
     }
   };
@@ -54,13 +65,6 @@ const SheetView = () => {
     const target = { row: cell.row, col: cell.col }
     dispatch(spreadsheetActions.selectMultiple(msFix(selectedCell, target)));
   };
-
-  // Extract the relevant state.
-  const viewSize = useSelector(state => state.spreadsheet.viewport);
-  const sheet = useSelector(state => 
-    state.spreadsheet.sheets[state.spreadsheet.selected]);
-  const {cells, view} = sheet;
-  const {rows, cols, selectedCell, multiSelection} = view;
 
   // Define the visible range to display in the view.
   const range = {
