@@ -7,6 +7,7 @@ import KeyManager from './components/view/KeyManager';
 import styles from './App.module.scss';
 import { spreadsheetActions } from './store/spreadsheet';
 import { useDispatch } from 'react-redux';
+import Header from './components/header/Header';
 
 function App() {
 
@@ -24,9 +25,7 @@ function App() {
   return (
     <>
       <div className={styles.mainContainer}>
-        <div className={styles.header}>
-          <h1>SPREADSHEET</h1>
-        </div> 
+        <Header />
         <SheetPane />
         <SheetBar />
       </div>

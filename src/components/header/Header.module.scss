@@ -1,0 +1,20 @@
+@use '../../styles/colors.scss';
+@use '../../styles/variables.scss';
+
+.header {
+  flex: 0 0 content;
+
+  box-shadow: 0px 4px 4px colors.$shadow-gray;
+  z-index: 100;
+
+  /* Test sizing/colors. */
+  flex: 0 0 auto;
+  height: 100px;
+  background-color: colors.$base-gray;
+  color: colors.$text-headings;
+
+  /* Temporary styling for the h1. */
+  display: flex;
+  align-items: center;
+  > h1 { margin-left: variables.$left-margin; font-size: 4.8rem; }
+}
