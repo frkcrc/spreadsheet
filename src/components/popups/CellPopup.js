@@ -9,7 +9,7 @@ const CellPopup = props => {
   const {row, col} = props.payload;
 
   const clearCell = () => {
-    dispatch(spreadsheetActions.removeRow(row));
+    dispatch(spreadsheetActions.clearCell({row, col}));
   };
 
   const clearSelection = () => {

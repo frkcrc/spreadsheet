@@ -134,6 +134,11 @@ const spreadsheetSlice = createSlice({
     clearRow: (state, action) => {
       clearRow(state.sheets[state.selected], action.payload);
     },
+
+    clearCell: (state, action) => {
+      const {row, col} = action.payload;
+      state.sheets[state.selected].cells[row][col].content = '';
+    },
     
     clearSelection: (state) => {
       const view = state.sheets[state.selected].view;
