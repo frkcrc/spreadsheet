@@ -22,6 +22,7 @@ const SheetView = () => {
     state.spreadsheet.sheets[state.spreadsheet.selected]);
   const {cells, view} = sheet;
   const {rows, cols, selectedCell, multiSelection} = view;
+  const editing = useSelector(state => state.spreadsheet.editing.editing);
 
   // Effect to set the size responsively.
   useLayoutEffect(() => {
@@ -119,6 +120,7 @@ const SheetView = () => {
               cell={cell} 
               selected={same(cell, selectedCell)}
               multiselected={isMultiselected}
+              editing={editing}
               borders={borders}
               pointerDown={onPointerDownHandler}
               pointerEnter={onPointerEnterHandler}

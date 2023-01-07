@@ -8,7 +8,7 @@ import styles from './Cell.module.scss';
 const Cell = props => {
 
   const cellRef = useRef();
-  const editing = useSelector(state => state.spreadsheet.editing.editing);
+  const editing = props.editing;
   const dispatch = useDispatch();
   const cell = props.cell;
 
